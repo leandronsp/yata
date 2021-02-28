@@ -2,9 +2,14 @@ require 'socket'
 
 server = TCPSocket.open('localhost', 4242)
 
-server.puts 'Hello, server!'
+request = "GUARDAR email\nleandro@acme.com"
+server.puts request
 
-server_response = server.gets
-puts "Server response: #{server_response}"
+loop do
+  next_response_line = server.gets
+  puts next_response_line
+
+  break if next_response_line.nil?
+end
 
 server.close
