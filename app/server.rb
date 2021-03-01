@@ -17,6 +17,10 @@ loop do
     email = second_line.chomp
     response = "CRIADO\nEmail <#{email}> guardado com sucesso"
     client.puts response
+  elsif first_line == "GET email\n"
+    email = second_line.chomp
+    response = "OK\n#{email}"
+    client.puts response
   end
 
   client.close
