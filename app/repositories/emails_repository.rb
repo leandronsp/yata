@@ -3,16 +3,16 @@ class EmailsRepository
     @emails_file = './db/emails.txt'
   end
 
-  def save(email)
-    File.write(@emails_file, email)
+  def save(model)
+    File.write(@emails_file, model.email)
   end
 
-  def find(email)
-    all_emails.find { |record| record == email }
+  def find_by_email(email)
+    all.find { |model| model.email == email }
   end
 
-  def all_emails
+  def all
     content = File.read(@emails_file)
-    content.split("\n")
+    content.split("\n").map { |email| Email.new(email: email) }
   end
 end
