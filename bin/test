@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm ./tmp/pids/*
 ruby ./bin/server &
 
 echo $! > ./tmp/pids/server.pid
