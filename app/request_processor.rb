@@ -4,9 +4,6 @@ class RequestProcessor
 
     first_line, second_line = lines.values_at(0, 1)
 
-    puts first_line
-    puts second_line
-
     if first_line == "GUARDAR email"
       email = second_line.chomp
 

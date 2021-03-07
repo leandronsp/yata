@@ -1,7 +1,7 @@
 task :test do
-  ruby "test/suite.rb"
+  sh "./bin/test"
 end
 
 task :server do
-  ruby "./bin/server"
+  sh "./bin/server"
 end

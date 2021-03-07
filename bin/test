@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ruby ./bin/server &
+
+echo $! > ./tmp/pids/server.pid
+
+ruby test/suite.rb
+
+serverpid=$(cat ./tmp/pids/server.pid)
+rm ./tmp/pids/*
+kill -9 $serverpid

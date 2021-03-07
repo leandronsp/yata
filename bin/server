@@ -5,8 +5,6 @@ require './app/request_processor'
 
 socket = TCPServer.new(4242)
 
-puts 'Listening to the port 4242'
-
 loop do
   # Waits for a new connection
   client = socket.accept

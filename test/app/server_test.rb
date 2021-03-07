@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'socket'
-require_relative '../server_test_helper'
+require './test/server_test_helper'
 
 class ServerTest < Test::Unit::TestCase
   include ServerTestHelper
