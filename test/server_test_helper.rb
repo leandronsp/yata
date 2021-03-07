@@ -1,6 +1,6 @@
 require 'socket'
 
-module TestHelper
+module ServerTestHelper
   attr_reader :server
 
   def setup

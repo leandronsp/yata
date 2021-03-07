@@ -1,12 +1,12 @@
 require 'test/unit'
 require 'socket'
-require_relative '../test_helper'
+require_relative '../server_test_helper'
 
 class ServerTest < Test::Unit::TestCase
-  include TestHelper
+  include ServerTestHelper
 
   def test_save_email
-    server.puts "GUARDAR email\ntest@acme.com"
+    server.puts "GUARDAR email\ntest@acme.com\n\n"
 
     assert_equal "CRIADO\nEmail <test@acme.com> guardado com sucesso\n", response
 
@@ -18,13 +18,13 @@ class ServerTest < Test::Unit::TestCase
   end
 
   def test_get_email
-    server.puts "GET email\ntest@acme.com"
+    server.puts "GET email\ntest@acme.com\n\n"
 
     assert_equal "OK\ntest@acme.com\n", response
   end
 
   def test_get_email_not_found
-    server.puts "GET email\nnotfound@acme.com"
+    server.puts "GET email\nnotfound@acme.com\n\n"
 
     assert_equal "NotFound\n", response
   end

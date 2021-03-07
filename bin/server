@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require './app/request_processor'
+
+socket = TCPServer.new(4242)
+
+puts 'Listening to the port 4242'
+
+loop do
+  # Waits for a new connection
+  client = socket.accept
+
+  # Reads the client request
+  request = ""
+  while line = client.gets
+    break if line == "\n"
+    request += line
+  end
+
+  # Processes the request which returns a response
+  response = RequestProcessor.process(request)
+
+  # Sends the response to the client
+  client.puts(response)
+
+  # Closes the client connection
+  client.close
+end
+
+socket.close
