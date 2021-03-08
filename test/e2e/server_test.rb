@@ -1,6 +1,4 @@
-require 'test/unit'
-require 'socket'
-require './test/server_test_helper'
+require './test/e2e/server_test_helper'
 
 class ServerTest < Test::Unit::TestCase
   include ServerTestHelper
@@ -18,6 +16,8 @@ class ServerTest < Test::Unit::TestCase
   end
 
   def test_get_email
+    File.write('./db/emails.txt', 'test@acme.com')
+
     server.puts "GET email\ntest@acme.com\n\n"
 
     assert_equal "OK\ntest@acme.com\n", response

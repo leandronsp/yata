@@ -1,3 +1,5 @@
+require './app/controllers/emails_controller'
+
 class RequestProcessor
   def self.process(request)
     lines = request.split("\n")
@@ -7,26 +9,17 @@ class RequestProcessor
     if first_line == "GUARDAR email"
       email = second_line.chomp
 
-      save_to_db(email)
+      controller = EmailsController.new(email)
+      controller.create
 
       "CRIADO\nEmail <#{email}> guardado com sucesso"
     elsif first_line == "GET email"
       email = second_line.chomp
 
-      exist_in_db?(email) ? "OK\n#{email}" : "NotFound"
+      controller = EmailsController.new(email)
+      found = controller.show
+
+      found ? "OK\n#{found}" : "NotFound"
     end
-  end
-
-  private
-
-  def self.save_to_db(email)
-    File.write('./db/emails.txt', email)
-  end
-
-  def self.exist_in_db?(email)
-    content = File.read('./db/emails.txt')
-    emails = content.split("\n")
-
-    emails.include?(email)
   end
 end

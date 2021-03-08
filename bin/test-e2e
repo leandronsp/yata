@@ -1,10 +1,11 @@
 #!/bin/bash
 
+rm ./tmp/pids/* 2> /dev/null
 ruby ./bin/server &
 
 echo $! > ./tmp/pids/server.pid
 
-ruby test/suite.rb
+ruby -r ./test/test_helper test/e2e.rb
 
 serverpid=$(cat ./tmp/pids/server.pid)
 rm ./tmp/pids/*
