@@ -1,7 +1,11 @@
 task :test do
-  sh "./bin/test"
+  ruby "test/app.rb"
 end
 
 task :server do
-  sh "./bin/server"
+  ruby "./bin/server"
+end
+
+task :e2e do
+  sh "./bin/test-e2e"
 end
