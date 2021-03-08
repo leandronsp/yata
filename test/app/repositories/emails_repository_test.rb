@@ -1,9 +1,9 @@
-require 'test/unit'
 require './app/repositories/emails_repository'
 require './app/models/email'
 
 class EmailsRepositoryTest < Test::Unit::TestCase
   def setup
+    FileUtils.touch('./db/emails.txt')
     @model = Email.new(email: 'test@acme.com')
   end
 
@@ -24,5 +24,12 @@ class EmailsRepositoryTest < Test::Unit::TestCase
     model_found = repository.find_by_email('test@acme.com')
 
     assert_equal 'test@acme.com', model_found.email
+  end
+
+  def test_find_not_existing_email
+    repository = EmailsRepository.new
+    model_found = repository.find_by_email('notfound@acme.com')
+
+    assert_equal nil, model_found
   end
 end

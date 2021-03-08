@@ -1,18 +1,16 @@
-require './app/repositories/emails_repository'
-require './app/models/email'
+require './app/actions/create_email_action'
+require './app/actions/find_email_action'
 
 class EmailsController
   def initialize(email)
-    @email_model = Email.new(email: email)
-    @emails_repository = EmailsRepository.new
+    @email = email
   end
 
   def create
-    @emails_repository.save(@email_model)
+    CreateEmailAction.call(@email)
   end
 
   def show
-    model = @emails_repository.find_by_email(@email_model.email)
-    model ? model.email : nil
+    FindEmailAction.call(@email)
   end
 end

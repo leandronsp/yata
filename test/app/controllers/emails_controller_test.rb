@@ -1,24 +1,21 @@
-require 'test/unit'
 require './app/controllers/emails_controller'
 
 class EmailsControllerTest < Test::Unit::TestCase
   def test_create
+    action_spy = Spy.on(CreateEmailAction, :call)
+
     controller = EmailsController.new('test@acme.com')
     controller.create
 
-    content = File.read('./db/emails.txt')
-    emails = content.split("\n")
-
-    assert_equal 1, emails.size
-    assert_equal 'test@acme.com', emails[0]
+    assert action_spy.has_been_called?
   end
 
   def test_show
-    File.write('./db/emails.txt', 'test@acme.com')
+    action_spy = Spy.on(FindEmailAction, :call)
 
     controller = EmailsController.new('test@acme.com')
-    found = controller.show
+    controller.show
 
-    assert_equal 'test@acme.com', found
+    assert action_spy.has_been_called_with?('test@acme.com')
   end
 end
