@@ -4,9 +4,9 @@ class ServerTest < Test::Unit::TestCase
   include ServerTestHelper
 
   def test_save_email
-    server.puts "GUARDAR email\ntest@acme.com\n\r\n"
+    server.puts "POST /emails HTTP/1.1\r\nContent-Length: 19\r\n\r\nemail=test@acme.com"
 
-    assert_equal "CRIADO\nEmail <test@acme.com> guardado com sucesso\n", response
+    assert_equal "HTTP/1.1 201\r\n\r\n\r\n", response
 
     content = File.read('./db/emails.txt')
     emails = content.split("\n")
@@ -18,20 +18,26 @@ class ServerTest < Test::Unit::TestCase
   def test_get_email
     File.write('./db/emails.txt', 'test@acme.com')
 
-    server.puts "GET email\ntest@acme.com\n\r\n"
+    server.puts "GET /emails?email=test@acme.com HTTP/1.1\r\n\r\n\r\n"
 
-    assert_equal "OK\ntest@acme.com\n", response
+    assert_equal "HTTP/1.1 200\r\n\r\n\r\ntest@acme.com\n", response
   end
 
   def test_get_email_not_found
-    server.puts "GET email\nnotfound@acme.com\n\r\n"
+    server.puts "GET /emails?email=notfound@acme.com HTTP/1.1\r\n\r\n\r\n"
 
-    assert_equal "NotFound\n", response
+    assert_equal "HTTP/1.1 404\r\n\r\n\r\n", response
   end
 
-  def test_get_hello_http
+  def test_path_not_found
+    server.puts "GET /seumadruga HTTP/1.1\r\n\r\n\r\n"
+
+    assert_equal "HTTP/1.1 404\r\n\r\n\r\n", response
+  end
+
+  def test_get_hello
     server.puts "GET /hello HTTP/1.1\r\n\r\n"
 
-    assert_equal "HTTP/1.1 200\r\n\r\nHello\n", response
+    assert_equal "HTTP/1.1 200\r\n\r\n\r\nHello\n", response
   end
 end

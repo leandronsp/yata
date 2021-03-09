@@ -1,25 +1,23 @@
+require './app/controllers/base_controller'
 require './app/actions/create_email_action'
 require './app/actions/find_email_action'
 require './app/views/emails_view_model'
 
-class EmailsController
-  def initialize(email)
-    @email = email
-  end
-
+class EmailsController < BaseController
   def create
-    CreateEmailAction.call(@email)
+    CreateEmailAction.call(params[:email])
 
-    EmailsViewModel.render_create(email: @email)
+    render status: 201
   end
 
   def show
-    found = FindEmailAction.call(@email)
+    found = FindEmailAction.call(params[:email])
 
     if found
-      EmailsViewModel.render_show(email: found)
+      body = EmailsViewModel.show(email: found)
+      render status: 200, body: body
     else
-      EmailsViewModel.render_not_found
+      render status: 404
     end
   end
 end

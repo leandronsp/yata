@@ -1,29 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'socket'
-require './app/request_processor'
+require './lib/application'
 
-socket = TCPServer.new(4242)
-
-loop do
-  # Waits for a new connection
-  client = socket.accept
-
-  # Reads the client request
-  request = ""
-  while line = client.gets
-    break if line == "\r\n"
-    request += line
-  end
-
-  # Processes the request which returns a response
-  response = RequestProcessor.process(request)
-
-  # Sends the response to the client
-  client.puts(response)
-
-  # Closes the client connection
-  client.close
-end
-
-socket.close
+Application.serve!(4242)
