@@ -8,17 +8,23 @@ class RequestProcessorTest < Test::Unit::TestCase
     response = RequestProcessor.process(request)
 
     assert controller_spy.has_been_called?
-    assert_equal "CRIADO\nEmail <test@acme.com> guardado com sucesso", response
   end
 
   def test_get_email
-    Spy
-      .on_instance_method(EmailsController, :show)
-      .and_return('example@acme.com')
+    controller_spy = Spy.on_instance_method(EmailsController, :show)
 
     request  = "GET email\nexample@acme.com"
     response = RequestProcessor.process(request)
 
-    assert_equal "OK\nexample@acme.com", response
+    assert controller_spy.has_been_called?
+  end
+
+  def test_get_hello
+    controller_spy = Spy.on_instance_method(HelloController, :show)
+
+    request  = "GET /hello HTTP/1.1"
+    response = RequestProcessor.process(request)
+
+    assert controller_spy.has_been_called?
   end
 end

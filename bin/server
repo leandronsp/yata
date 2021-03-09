@@ -12,7 +12,7 @@ loop do
   # Reads the client request
   request = ""
   while line = client.gets
-    break if line == "\n"
+    break if line == "\r\n"
     request += line
   end
 
