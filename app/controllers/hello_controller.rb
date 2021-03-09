@@ -1,7 +1,10 @@
+require './app/controllers/base_controller'
 require './app/views/hello_view_model'
 
-class HelloController
+class HelloController < BaseController
   def show
-    HelloViewModel.render_show
+    body = HelloViewModel.show
+
+    render status: 200, body: body
   end
 end
