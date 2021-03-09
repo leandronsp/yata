@@ -16,6 +16,10 @@ class EmailsController
   def show
     found = FindEmailAction.call(@email)
 
-    EmailsViewModel.render_show(email: found)
+    if found
+      EmailsViewModel.render_show(email: found)
+    else
+      EmailsViewModel.render_not_found
+    end
   end
 end
