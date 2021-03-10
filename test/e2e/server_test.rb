@@ -20,7 +20,7 @@ class ServerTest < Test::Unit::TestCase
 
     server.puts "GET /emails?email=test@acme.com HTTP/1.1\r\n\r\n\r\n"
 
-    assert_equal "HTTP/1.1 200\r\n\r\n\r\ntest@acme.com\n", response
+    assert_equal "HTTP/1.1 200\r\nContent-Type: text/html\r\n\r\n<p>test@acme.com</p>\n", response
   end
 
   def test_get_email_not_found
@@ -38,6 +38,6 @@ class ServerTest < Test::Unit::TestCase
   def test_get_hello
     server.puts "GET /hello HTTP/1.1\r\n\r\n"
 
-    assert_equal "HTTP/1.1 200\r\n\r\n\r\nHello\n", response
+    assert_equal "HTTP/1.1 200\r\nContent-Type: text/html\r\n\r\n<h1>Hello</h1>\n", response
   end
 end

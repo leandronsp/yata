@@ -5,7 +5,8 @@ class HelloControllerTest < Test::Unit::TestCase
     controller = HelloController.new
     response = controller.show
 
-    assert response[:status] = 200
-    assert response[:body] = 'Hello'
+    assert response[:status] == 200
+    assert response[:body] == '<h1>Hello</h1>'
+    assert response[:headers]['Content-Type'] == 'text/html'
   end
 end

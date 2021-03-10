@@ -1,12 +1,17 @@
 class BaseController
   attr_reader :params, :headers
 
-  def initialize(params: {}, headers: [])
+  def initialize(params: {}, headers: {})
     @params = params
     @headers = headers
   end
 
-  def render(status:, body: '', headers: [])
-    { status: status, body: body, headers: headers }
+  def render(response_params = {})
+    status = response_params[:status]
+    body   = response_params[:body] || ''
+
+    response_headers = response_params.reject { |k, v| %i[status body].include?(k) }
+
+    { status: status, body: body, headers: response_headers }
   end
 end

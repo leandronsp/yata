@@ -95,10 +95,17 @@ class Application
     end
   end
 
-  def build_response(status:, body: '', headers: [])
-    status      = "HTTP/1.1 #{status}"
-    headers_str = headers.join("\r\n")
+  def build_response(status:, body: '', headers: {})
+    "HTTP/1.1 #{status}\r\n#{stringify_headers(headers)}\r\n\r\n#{body}"
+  end
 
-    "#{status}\r\n#{headers_str}\r\n\r\n#{body}"
+  def stringify_headers(headers)
+    headers
+      .map(&method(:stringify_header))
+      .join("\r\n")
+  end
+
+  def stringify_header(name, value)
+    "#{name}: #{value}"
   end
 end

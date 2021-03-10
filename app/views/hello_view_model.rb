@@ -1,5 +1,5 @@
 class HelloViewModel
   def self.show
-    "Hello"
+    "<h1>Hello</h1>"
   end
 end

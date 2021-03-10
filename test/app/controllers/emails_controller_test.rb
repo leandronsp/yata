@@ -22,7 +22,8 @@ class EmailsControllerTest < Test::Unit::TestCase
     assert action_spy.has_been_called_with?('test@acme.com')
     assert view_spy.has_been_called?
 
-    assert response[:status] = 200
-    assert response[:body] = 'test@acme.com'
+    assert response[:status] == 200
+    assert response[:body] == '<p>test@acme.com</p>'
+    assert response[:headers]['Content-Type'] == 'text/html'
   end
 end
