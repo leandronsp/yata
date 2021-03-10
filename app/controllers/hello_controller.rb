@@ -5,6 +5,6 @@ class HelloController < BaseController
   def show
     body = HelloViewModel.show
 
-    render status: 200, body: body
+    render status: 200, body: body, 'Content-Type' => 'text/html'
   end
 end

@@ -1,5 +1,5 @@
 class EmailsViewModel
   def self.show(params = {})
-    params[:email]
+    "<p>#{params[:email]}</p>"
   end
 end

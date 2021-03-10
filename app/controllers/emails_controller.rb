@@ -15,7 +15,8 @@ class EmailsController < BaseController
 
     if found
       body = EmailsViewModel.show(email: found)
-      render status: 200, body: body
+
+      render status: 200, body: body, 'Content-Type' => 'text/html'
     else
       render status: 404
     end
