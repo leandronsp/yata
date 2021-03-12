@@ -1,5 +1,5 @@
 require './app/controllers/base_controller'
-require './app/views/hello_view_model'
+require './app/views/hello/view_model'
 
 class HelloController < BaseController
   def show

@@ -1,7 +1,7 @@
 require './app/controllers/base_controller'
 require './app/actions/create_email_action'
 require './app/actions/find_email_action'
-require './app/views/emails_view_model'
+require './app/views/emails/view_model'
 
 class EmailsController < BaseController
   def create

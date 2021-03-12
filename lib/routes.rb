@@ -6,6 +6,7 @@ Dir[File.join(File.expand_path('..', __dir__), 'app', 'controllers', '*_controll
 class Routes
   CONTROLLERS_ROUTER = {
     'GET /'        => :get_homepage_route,
+    'GET /login'   => :get_login_route,
     'GET /emails'  => :get_emails_route,
     'GET /hello'   => :get_hello_route,
     'POST /emails' => :post_emails_route
@@ -53,6 +54,11 @@ class Routes
 
   def get_homepage_route
     controller = HomeController.new(params: @request.params, headers: @request.headers)
+    controller.show
+  end
+
+  def get_login_route
+    controller = LoginController.new(params: @request.params, headers: @request.headers)
     controller.show
   end
 end
