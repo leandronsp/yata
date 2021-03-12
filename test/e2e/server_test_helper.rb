@@ -20,4 +20,8 @@ module ServerTestHelper
 
     acc
   end
+
+  def normalize_str(str)
+    str.gsub("\n\n", "\n")
+  end
 end
