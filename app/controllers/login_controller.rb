@@ -1,9 +1,9 @@
 require './app/controllers/base_controller'
-require './app/views/home/view_model'
+require './app/views/login/view_model'
 
-class HomeController < BaseController
+class LoginController < BaseController
   def show
-    body = HomeViewModel.show
+    body = LoginViewModel.show
 
     render status: 200, body: body, 'Content-Type' => 'text/html'
   end
