@@ -32,7 +32,7 @@ class ServerTest < Test::Unit::TestCase
   def test_path_not_found
     server.puts "GET /seumadruga HTTP/1.1\r\n\r\n\r\n"
 
-    assert_equal "HTTP/1.1 404\r\n\r\n\r\n", response
+    assert_equal "HTTP/1.1 404\r\nContent-Type: text/html\r\n\r\n<h1>Not Found</h1>\n", response
   end
 
   def test_get_hello
