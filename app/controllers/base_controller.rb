@@ -1,9 +1,10 @@
 class BaseController
-  attr_reader :params, :headers
+  attr_reader :params, :headers, :cookie
 
-  def initialize(params: {}, headers: {})
+  def initialize(params: {}, headers: {}, cookie: {})
     @params = params
     @headers = headers
+    @cookie = cookie
   end
 
   def render(response_params = {})

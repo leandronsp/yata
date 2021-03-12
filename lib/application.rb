@@ -43,10 +43,11 @@ class Application
     verb, path, uri_params = process_firstline(client)
 
     headers     = process_headers(client)
+    cookie      = process_cookie(headers['Cookie'])
     body_params = process_body(client, headers['Content-Length'])
     params      = uri_params.merge(body_params)
 
-    [verb, path, params, headers]
+    [verb, path, params, headers, cookie]
   end
 
   def process_body(client, content_length)
@@ -64,10 +65,20 @@ class Application
 
       header_name, header_value = line.split(": ")
 
-      headers[header_name] = header_value
+      headers[header_name] = header_value.gsub("\r\n", '')
     end
 
     headers
+  end
+
+  def process_cookie(cookie_value)
+    cookie = {}
+    return cookie unless cookie_value
+
+    name, value = cookie_value.split('=')
+    cookie[name.to_sym] = value
+
+    cookie
   end
 
   def process_firstline(client)

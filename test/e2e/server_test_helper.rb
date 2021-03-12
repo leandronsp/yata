@@ -11,6 +11,10 @@ module ServerTestHelper
     @server.close
   end
 
+  def prepare_request(action, headers = '', body = '')
+    "#{action} HTTP/1.1\r\n#{headers}\r\n\r\n#{body}"
+  end
+
   def response
     acc = ''
 
@@ -21,7 +25,7 @@ module ServerTestHelper
     acc
   end
 
-  def normalize_str(str)
-    str.gsub("\n\n", "\n")
+  def remove_cr(str)
+    str.gsub("\r\n", " ")
   end
 end

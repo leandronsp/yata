@@ -7,13 +7,14 @@ class Routes
   CONTROLLERS_ROUTER = {
     'GET /'        => :get_homepage_route,
     'GET /login'   => :get_login_route,
+    'POST /login'  => :post_login_route,
     'GET /emails'  => :get_emails_route,
     'GET /hello'   => :get_hello_route,
     'POST /emails' => :post_emails_route
   }.freeze
 
-  def self.route(verb, path, params, headers)
-    request = Request.new(verb, path, params, headers)
+  def self.route(verb, path, params, headers, cookie)
+    request = Request.new(verb, path, params, headers, cookie)
     response = Response.new
 
     new(request, response).process
@@ -38,27 +39,43 @@ class Routes
   end
 
   def get_emails_route
-    controller = EmailsController.new(params: @request.params, headers: @request.headers)
+    controller = EmailsController.new(params: @request.params,
+                                      headers: @request.headers,
+                                      cookie: @request.cookie)
     controller.show
   end
 
   def get_hello_route
-    controller = HelloController.new(params: @request.params, headers: @request.headers)
+    controller = HelloController.new(params: @request.params,
+                                     headers: @request.headers)
     controller.show
   end
 
   def post_emails_route
-    controller = EmailsController.new(params: @request.params, headers: @request.headers)
+    controller = EmailsController.new(params: @request.params,
+                                      headers: @request.headers,
+                                      cookie: @request.cookie)
     controller.create
   end
 
   def get_homepage_route
-    controller = HomeController.new(params: @request.params, headers: @request.headers)
+    controller = HomeController.new(params: @request.params,
+                                      headers: @request.headers,
+                                      cookie: @request.cookie)
     controller.show
   end
 
   def get_login_route
-    controller = LoginController.new(params: @request.params, headers: @request.headers)
+    controller = LoginController.new(params: @request.params,
+                                      headers: @request.headers,
+                                      cookie: @request.cookie)
     controller.show
+  end
+
+  def post_login_route
+    controller = LoginController.new(params: @request.params,
+                                      headers: @request.headers,
+                                      cookie: @request.cookie)
+    controller.create
   end
 end
