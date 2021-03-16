@@ -1,3 +1,4 @@
+require 'bcrypt'
 require './app/models/user'
 require './app/actions/base_action'
 require './app/repositories/users_repository'
@@ -6,9 +7,12 @@ require './app/errors/email_already_taken_error'
 
 class RegisterAction < BaseAction
   def initialize(email, password, password_confirmation)
-    @user = User.new(email: email, password: password)
-    @password_confirmation = password_confirmation
+    @user = User.new(
+      email: email,
+      password: BCrypt::Password.create(password)
+    )
 
+    @password_confirmation = password_confirmation
     @users_repository = UsersRepository.new
   end
 

@@ -1,15 +1,10 @@
 require './test/e2e/server_test_helper'
 
-class RegisterTest < Test::Unit::TestCase
+class RegisterThenLoginTest < Test::Unit::TestCase
   include ServerTestHelper
 
-  def test_register
-    server.puts(prepare_request("GET /register"))
-
-    assert remove_cr(response).match(/HTTP\/1\.1 200.*?/)
-  end
-
-  def test_post_register_success
+  def test_register_then_login
+    # Register
     FileUtils.rm('./db/users.txt')
 
     server.puts(prepare_request("POST /register",
@@ -20,5 +15,14 @@ class RegisterTest < Test::Unit::TestCase
 
     content = File.read('./db/users.txt')
     assert_equal 1, content.split("\n").size
+
+    refresh!
+
+    # Login
+    server.puts(prepare_request("POST /login",
+                                "Content-Length: 36",
+                                "email=test@acme.com&password=pass123"))
+
+    assert remove_cr(response).match(/HTTP\/1\.1 301.*?/)
   end
 end

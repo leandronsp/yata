@@ -11,6 +11,11 @@ module ServerTestHelper
     @server.close
   end
 
+  def refresh!
+    @server.close
+    @server = TCPSocket.open('localhost', 4242)
+  end
+
   def prepare_request(action, headers = '', body = '')
     "#{action} HTTP/1.1\r\n#{headers}\r\n\r\n#{body}"
   end

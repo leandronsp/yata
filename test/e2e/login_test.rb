@@ -1,3 +1,4 @@
+require 'bcrypt'
 require './test/e2e/server_test_helper'
 
 class LoginTest < Test::Unit::TestCase
@@ -11,7 +12,7 @@ class LoginTest < Test::Unit::TestCase
 
   def test_post_login_success
     File.open('./db/users.txt', 'wb') do |file|
-      file.puts("test@acme.com;pass123")
+      file.puts("test@acme.com;#{BCrypt::Password.create('pass123')}")
     end
 
     server.puts(prepare_request("POST /login",

@@ -1,11 +1,13 @@
+require 'bcrypt'
 require './app/actions/login_action'
 
 class LoginActionTest < Test::Unit::TestCase
   def test_login
-    repo_spy = Spy.on_instance_method(UsersRepository, :find_by_email_and_password)
+    File.open('./db/users.txt', 'wb') do |file|
+      file.write("test@acme.com;#{BCrypt::Password.create('pass123')}")
+    end
 
-    LoginAction.call('test@acme.com', 'pass123')
-
-    assert repo_spy.has_been_called?
+    email = LoginAction.call('test@acme.com', 'pass123')
+    assert_equal 'test@acme.com', email
   end
 end

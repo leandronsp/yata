@@ -18,12 +18,6 @@ class UsersRepository
     all.find { |model| model.email == email }
   end
 
-  def find_by_email_and_password(email, password)
-    all.find do |model|
-      model.email == email && model.password == password
-    end
-  end
-
   def all
     content = File.read(@users_db)
 
