@@ -5,12 +5,11 @@ Dir[File.join(File.expand_path('..', __dir__), 'app', 'controllers', '*_controll
 
 class Routes
   CONTROLLERS_ROUTER = {
-    'GET /'        => :get_homepage_route,
-    'GET /login'   => :get_login_route,
-    'POST /login'  => :post_login_route,
-    'GET /emails'  => :get_emails_route,
-    'GET /hello'   => :get_hello_route,
-    'POST /emails' => :post_emails_route
+    'GET /'          => :get_homepage_route,
+    'GET /login'     => :get_login_route,
+    'POST /login'    => :post_login_route,
+    'GET /register'  => :get_register_route,
+    'POST /register' => :post_register_route
   }.freeze
 
   def self.route(verb, path, params, headers, cookie)
@@ -38,26 +37,6 @@ class Routes
     { status: 404, body: '<h1>Not Found</h1>', headers: { 'Content-Type' => 'text/html' }}
   end
 
-  def get_emails_route
-    controller = EmailsController.new(params: @request.params,
-                                      headers: @request.headers,
-                                      cookie: @request.cookie)
-    controller.show
-  end
-
-  def get_hello_route
-    controller = HelloController.new(params: @request.params,
-                                     headers: @request.headers)
-    controller.show
-  end
-
-  def post_emails_route
-    controller = EmailsController.new(params: @request.params,
-                                      headers: @request.headers,
-                                      cookie: @request.cookie)
-    controller.create
-  end
-
   def get_homepage_route
     controller = HomeController.new(params: @request.params,
                                       headers: @request.headers,
@@ -76,6 +55,20 @@ class Routes
     controller = LoginController.new(params: @request.params,
                                       headers: @request.headers,
                                       cookie: @request.cookie)
+    controller.create
+  end
+
+  def get_register_route
+    controller = RegisterController.new(params: @request.params,
+                                     headers: @request.headers,
+                                     cookie: @request.cookie)
+    controller.show
+  end
+
+  def post_register_route
+    controller = RegisterController.new(params: @request.params,
+                                     headers: @request.headers,
+                                     cookie: @request.cookie)
     controller.create
   end
 end

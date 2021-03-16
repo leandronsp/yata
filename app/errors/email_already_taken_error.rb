@@ -1,0 +1,2 @@
+class EmailAlreadyTakenError < StandardError
+end

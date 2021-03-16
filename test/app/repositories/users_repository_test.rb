@@ -16,4 +16,18 @@ class UsersRepositoryTest < Test::Unit::TestCase
 
     assert_equal 'test@acme.com', user.email
   end
+
+  def test_create_user
+    FileUtils.rm('./db/users.txt')
+
+    repository = UsersRepository.new
+
+    user = User.new(email: 'test@acme.com', password: 'pass123')
+    email = repository.create_user(user)
+
+    assert_equal 'test@acme.com', email
+
+    content = File.read('./db/users.txt')
+    assert_equal 1, content.split("\n").size
+  end
 end
