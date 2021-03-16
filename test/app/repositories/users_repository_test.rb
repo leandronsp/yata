@@ -7,7 +7,7 @@ class UsersRepositoryTest < Test::Unit::TestCase
 
   def test_find_by_email_and_password
     File.open('./db/users.txt', 'wb') do |file|
-      file.puts("test@acme.com;pass123")
+      file.puts("test@acme.com;#{BCrypt::Password.create('pass123')}")
     end
 
     repository = UsersRepository.new
