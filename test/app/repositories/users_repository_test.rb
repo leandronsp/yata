@@ -27,7 +27,9 @@ class UsersRepositoryTest < Test::Unit::TestCase
 
     assert_equal 'test@acme.com', email
 
-    content = File.read('./db/users.txt')
-    assert_equal 1, content.split("\n").size
+    row = File.read('./db/users.txt').split("\n").first
+    found_email, password = row.split(';')
+    assert_equal found_email, email
+    assert_equal BCrypt::Password.new(password), 'pass123'
   end
 end
