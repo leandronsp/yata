@@ -1,0 +1,30 @@
+require './app/actions/register_action'
+require './app/errors/password_not_match_error'
+require './app/errors/email_already_taken_error'
+
+class RegisterActionTest < Test::Unit::TestCase
+  def setup
+    FileUtils.rm('./db/users.txt')
+  end
+
+  def test_register
+    email = RegisterAction.call('test@acme.com', 'pass123', 'pass123')
+    assert_equal 'test@acme.com', email
+  end
+
+  def test_register_password_not_match
+    assert_raise PasswordNotMatchError do
+      RegisterAction.call('test@acme.com', 'pass123', 'notmatch')
+    end
+  end
+
+  def test_register_existing_email
+    File.open('./db/users.txt', 'wb') do |file|
+      file.write('test@acme.com;123')
+    end
+
+    assert_raise EmailAlreadyTakenError do
+      RegisterAction.call('test@acme.com', 'pass123', 'pass123')
+    end
+  end
+end

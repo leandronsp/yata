@@ -3,6 +3,19 @@ require './app/models/user'
 class UsersRepository
   def initialize
     @users_db = './db/users.txt'
+    FileUtils.touch(@users_db)
+  end
+
+  def create_user(user)
+    File.open(@users_db, 'a') do |file|
+      file.puts("#{user.email};#{user.password}")
+    end
+
+    user.email
+  end
+
+  def find_by_email(email)
+    all.find { |model| model.email == email }
   end
 
   def find_by_email_and_password(email, password)
