@@ -1,3 +1,4 @@
+require 'bcrypt'
 require './app/actions/base_action'
 require './app/repositories/users_repository'
 
@@ -10,8 +11,15 @@ class LoginAction < BaseAction
   end
 
   def result
-    user = @users_repository.find_by_email_and_password(@email, @password)
+    user = @users_repository.find_by_email(@email)
+    return unless user
 
-    user ? user.email : nil
+    password_match?(user.password) ? user.email : nil
+  end
+
+  private
+
+  def password_match?(password_hash)
+    BCrypt::Password.new(password_hash) == @password
   end
 end

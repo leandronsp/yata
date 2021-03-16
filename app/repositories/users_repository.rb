@@ -1,4 +1,3 @@
-require 'bcrypt'
 require './app/models/user'
 
 class UsersRepository
@@ -9,7 +8,7 @@ class UsersRepository
 
   def create_user(user)
     File.open(@users_db, 'a') do |file|
-      file.puts("#{user.email};#{BCrypt::Password.create(user.password)}")
+      file.puts("#{user.email};#{user.password}")
     end
 
     user.email
@@ -17,13 +16,6 @@ class UsersRepository
 
   def find_by_email(email)
     all.find { |model| model.email == email }
-  end
-
-  def find_by_email_and_password(email, password)
-    all.find do |model|
-      model.email == email &&
-        BCrypt::Password.new(model.password) == password
-    end
   end
 
   def all
