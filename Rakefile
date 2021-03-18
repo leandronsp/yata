@@ -1,5 +1,6 @@
-task :prepare_db do
+task :prepare_fs do
   FileUtils.mkdir_p('./db')
+  FileUtils.mkdir_p('./tmp/pids')
 end
 
 task :test do
