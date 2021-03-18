@@ -1,3 +1,7 @@
+task :prepare_db do
+  FileUtils.mkdir_p('./db')
+end
+
 task :test do
   ruby "test/app.rb"
 end
