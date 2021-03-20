@@ -1,4 +1,4 @@
-require 'bcrypt'
+require './app/services/password_hashing'
 require './app/actions/register_action'
 require './app/errors/password_not_match_error'
 require './app/errors/email_already_taken_error'
@@ -13,10 +13,10 @@ class RegisterActionTest < Test::Unit::TestCase
     assert_equal 'test@acme.com', email
 
     row = File.read('./db/users.txt').split("\n").first
-    found_email, password = row.split(';')
+    found_email, password_hash = row.split(';')
 
     assert_equal found_email, email
-    assert_equal BCrypt::Password.new(password), 'pass123'
+    assert PasswordHashing.match?(password_hash, 'pass123')
   end
 
   def test_register_password_not_match

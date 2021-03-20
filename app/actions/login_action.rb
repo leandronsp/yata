@@ -1,4 +1,4 @@
-require 'bcrypt'
+require './app/services/password_hashing'
 require './app/actions/base_action'
 require './app/repositories/users_repository'
 
@@ -20,6 +20,6 @@ class LoginAction < BaseAction
   private
 
   def password_match?(password_hash)
-    BCrypt::Password.new(password_hash) == @password
+    PasswordHashing.match?(password_hash, @password)
   end
 end
