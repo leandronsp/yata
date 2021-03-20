@@ -1,4 +1,4 @@
-require 'bcrypt'
+require './app/services/password_hashing'
 require './app/models/user'
 require './app/actions/base_action'
 require './app/repositories/users_repository'
@@ -9,7 +9,7 @@ class RegisterAction < BaseAction
   def initialize(email, password, password_confirmation)
     @user = User.new(
       email: email,
-      password: BCrypt::Password.create(password)
+      password: PasswordHashing.generate_hash(password)
     )
 
     @password_confirmation = password_confirmation
