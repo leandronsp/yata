@@ -1,2 +1,3 @@
 db/
 tmp/
+Pulumi.*.yaml
