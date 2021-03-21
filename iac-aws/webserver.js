@@ -5,7 +5,7 @@ const pulumi = require("@pulumi/pulumi");
 
 let config = new pulumi.Config();
 
-let securityGroup = new aws.ec2.SecurityGroup("ssh-from-allowed-ip", {
+let securityGroupSsh = new aws.ec2.SecurityGroup("ssh-from-allowed-ip", {
   ingress: [
     { protocol: "tcp", fromPort: 22, toPort: 22, cidrBlocks: [config.require("ssh-from-ip")] },
   ],
@@ -14,6 +14,18 @@ let securityGroup = new aws.ec2.SecurityGroup("ssh-from-allowed-ip", {
   ],
   tags: {
     Name: "ssh-from-allowed-ip",
+  }
+});
+
+let securityGroupHttp = new aws.ec2.SecurityGroup("http", {
+  ingress: [
+    { protocol: "tcp", fromPort: 4242, toPort: 4242, cidrBlocks: ["0.0.0.0/0"] },
+  ],
+  egress: [
+    { fromPort: 0, toPort: 0, protocol: "-1", cidrBlocks: ["0.0.0.0/0"] },
+  ],
+  tags: {
+    Name: "http",
   }
 });
 
@@ -37,7 +49,7 @@ exports.createInstance = function(name, size) {
   return new aws.ec2.Instance(name, {
     tags: { Name: name },
     instanceType: size,
-    vpcSecurityGroupIds: [defaultSecurityGroup.id, securityGroup.id],
+    vpcSecurityGroupIds: [defaultSecurityGroup.id, securityGroupSsh.id, securityGroupHttp.id],
     ami: ami.id,
     keyName: keyPair.keyName,
   });
