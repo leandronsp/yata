@@ -13,7 +13,7 @@ class LoginController < BaseController
     email = LoginAction.call(params[:email], params[:password])
 
     if email
-      render status: 301, 'Location' => 'http://localhost:4242/',
+      render status: 301, 'Location' => "#{FULL_HOST}/",
                           'Set-Cookie' => "email=#{email}; path=/; HttpOnly"
     else
       render status: 401

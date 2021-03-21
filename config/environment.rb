@@ -1,0 +1,9 @@
+APP_PROTOCOL = ENV['APP_PROTOCOL'] || 'http'
+APP_HOST = ENV['APP_HOST'] || 'localhost'
+APP_PORT = ENV['APP_PORT']
+
+if APP_PORT
+  FULL_HOST = "#{APP_PROTOCOL}://#{APP_HOST}:#{APP_PORT}"
+else
+  FULL_HOST = "#{APP_PROTOCOL}://#{APP_HOST}"
+end

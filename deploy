@@ -1,0 +1,35 @@
+#!/bin/bash
+
+REMOTE_HOST=paris-playground
+
+SETUP_DEPENDENCIES="gcc gcc-c++ patch readline readline-devel zlib zlib-devel \
+  libffi-devel openssl-devel make bzip2 autoconf automake libtool bison sqlite-devel"
+
+ssh $REMOTE_HOST "sudo yum install $SETUP_DEPENDENCIES"
+
+SETUP_RUBY="curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - && \
+  curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import - && \
+  curl -L get.rvm.io | bash -s stable && \
+  source /home/ec2-user/.rvm/scripts/rvm && \
+  rvm reload && \
+  rvm install 2.7 && \
+  rvm use 2.7 --default"
+
+ssh $REMOTE_HOST "$SETUP_RUBY"
+
+APP_FOLDER=yata-web
+
+ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/tmp/pids"
+ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/db"
+
+scp -r app/ config/ bin/ lib/ systemd/ Gemfile Gemfile.lock Rakefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
+
+ssh $REMOTE_HOST "echo \"export APP_PROTOCOL=http\" >> ~/.bashrc"
+ssh $REMOTE_HOST "echo \"export APP_HOST=ec2-35-180-55-68.eu-west-3.compute.amazonaws.com\" >> ~/.bashrc"
+ssh $REMOTE_HOST "echo \"export APP_PORT=4242\" >> ~/.bashrc"
+
+SETUP_SYSTEMD="sudo cp $APP_FOLDER/systemd/yata.service /etc/systemd/system/yata.service && \
+  sudo systemctl enable yata && \
+  sudo systemctl start yata"
+
+ssh $REMOTE_HOST "$SETUP_SYSTEMD"

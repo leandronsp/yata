@@ -1,6 +1,8 @@
 require 'test/unit'
 require 'spy/integration'
 
+load './config/environment.rb'
+
 Test::Unit.at_start do
   FileUtils.touch('./db/users.txt')
 end

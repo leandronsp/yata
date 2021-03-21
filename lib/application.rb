@@ -106,7 +106,11 @@ class Application
     end
   end
 
-  def build_response(status:, body: '', headers: {})
+  def build_response(attrs = {})
+    status = attrs[:status]
+    body = attrs[:body] || ''
+    headers = attrs[:headers] || {}
+
     "HTTP/1.1 #{status}\r\n#{stringify_headers(headers)}\r\n\r\n#{body}"
   end
 

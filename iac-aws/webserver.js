@@ -1,4 +1,4 @@
-"use string";
+"use strict";
 
 const aws = require("@pulumi/aws");
 const pulumi = require("@pulumi/pulumi");

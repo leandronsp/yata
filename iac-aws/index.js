@@ -1,4 +1,4 @@
-"use string";
+"use strict";
 
 const pulumi = require("@pulumi/pulumi");
 const webserver = require("./webserver.js");
