@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@pulumi/aws": "^3.34.1",
+    "@pulumi/pulumi": "^2.23.1"
+  }
+}
