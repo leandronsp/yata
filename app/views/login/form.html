@@ -1,23 +1,61 @@
-<div>
-  <h1>Yata</h1>
+<head>
+  <meta charset="UTF-8">
+
+  <style>
+    body {
+      font-family: Helvetica;
+    }
+
+    h1 {
+      margin: 15 0 0 0;
+      color: #333;
+    }
+
+    h3 {
+      margin-bottom: 50px;
+    }
+
+    h1, h3, h4 {
+      text-align: center;
+    }
+
+    div.container {
+      margin-left: 25%;
+      margin-right: 25%;
+      margin-top: 5%;
+      margin-bottom: 5%;
+      border: 1px solid #c6c6c6;
+      border-radius: 4px;
+    }
+
+    div.field {
+      padding: 10px 150px;
+    }
+
+    div.field input {
+      width: 100%;
+      border: 1px solid #c9c9c9;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<div class="container">
+  <h1><a href="/">Yata</a></h1>
   <h4>Login</h4>
 
   <form action="/login" method="POST">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" name="email" />
+    <div class="field">
+      <input type="email" name="email" placeholder="Digite teu email associado à conta" />
     </div>
-    <div>
-      <label for="password" name="password">Password</label>
-      <input type="password" name="password" />
+    <div class="field">
+      <input type="password" name="password" placeholder="Digite tua password" />
     </div>
-    <div>
+    <div class="field">
       <input type="submit" value="Entrar" />
       ou <span><a href="/register">Criar nova conta</a>
     </div>
   </form>
-</div>
-
-<div>
-  <p><a href="/">Home</a></p>
 </div>

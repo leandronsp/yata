@@ -34,4 +34,14 @@ class LoginControllerTest < Test::Unit::TestCase
 
     assert response[:status] == 401
   end
+
+  def test_destroy_success
+    controller = LoginController.new(cookie: { email: 'test@acme.com' })
+    response = controller.destroy
+
+    assert response[:status] == 301
+    assert response[:headers]['Location'] == 'http://localhost:4242/'
+    assert response[:headers]['Set-Cookie'] == 'email=test@acme.com; path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
+  end
+
 end
