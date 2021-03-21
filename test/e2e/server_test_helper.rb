@@ -31,6 +31,6 @@ module ServerTestHelper
   end
 
   def remove_cr(str)
-    str.gsub("\r\n", " ")
+    str.gsub("\r\n", " ").gsub("\n", " ")
   end
 end
