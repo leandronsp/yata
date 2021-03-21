@@ -37,6 +37,6 @@ jobs:
     - name: Prepare DB
       run: bundle exec rake prepare_db
     - name: Run Unit tests
-      run: bundle exec rake test
+      run: export APP_PORT=4242 bundle exec rake test
     - name: Run E2E tests
-      run: bundle exec rake e2e
+      run: export APP_PORT=4242 bundle exec rake e2e
