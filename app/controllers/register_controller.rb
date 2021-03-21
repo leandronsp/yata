@@ -17,7 +17,7 @@ class RegisterController < BaseController
                           params[:password],
                           params[:password_confirmation])
 
-      render status: 301, 'Location' => 'http://localhost:4242/login'
+      render status: 301, 'Location' => "#{FULL_HOST}/login"
     rescue PasswordNotMatchError
       render status: 401, body: 'Password do not match'
     rescue EmailAlreadyTakenError

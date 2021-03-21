@@ -2,5 +2,8 @@ source 'https://rubygems.org'
 
 gem 'bcrypt'
 gem 'rake'
-gem 'test-unit'
-gem 'spy'
+
+group :development, :test do
+  gem 'test-unit'
+  gem 'spy'
+end
