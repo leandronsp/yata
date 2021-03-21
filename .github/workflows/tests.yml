@@ -29,6 +29,11 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Setup ENV variables
+      run: |
+        export APP_PROTOCOL=http
+        export APP_HOST=localhost
+        export APP_PORT=4242
     - name: Prepare DB
       run: bundle exec rake prepare_db
     - name: Run Unit tests
