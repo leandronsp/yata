@@ -19,7 +19,8 @@ let securityGroupSsh = new aws.ec2.SecurityGroup("ssh-from-allowed-ip", {
 
 let securityGroupHttp = new aws.ec2.SecurityGroup("http", {
   ingress: [
-    { protocol: "tcp", fromPort: 4242, toPort: 4242, cidrBlocks: ["0.0.0.0/0"] },
+    { protocol: "tcp", fromPort: 80, toPort: 80, cidrBlocks: ["0.0.0.0/0"] },
+    { protocol: "tcp", fromPort: 443, toPort: 443, cidrBlocks: ["0.0.0.0/0"] },
   ],
   egress: [
     { fromPort: 0, toPort: 0, protocol: "-1", cidrBlocks: ["0.0.0.0/0"] },
