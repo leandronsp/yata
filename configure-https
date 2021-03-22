@@ -1,0 +1,9 @@
+#!/bin/bash
+
+REMOTE_HOST=paris-playground
+HOST_DOMAIN=yata42.online
+
+SETUP_CERTBOT="certbot certbot-nginx"
+
+ssh $REMOTE_HOST "sudo yum install $SETUP_CERTBOT"
+ssh $REMOTE_HOST "sudo certbot certonly --nginx -d $HOST_DOMAIN"
