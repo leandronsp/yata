@@ -1,4 +1,3 @@
-require './app/services/password_hashing'
 require './app/actions/login_action'
 
 class LoginActionTest < Test::Unit::TestCase
