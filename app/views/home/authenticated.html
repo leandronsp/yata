@@ -1,52 +1,16 @@
 <head>
   <meta charset="UTF-8">
 
+  <link rel="stylesheet" href="public/yata.css">
+  <link rel="stylesheet" href="public/header.css">
+  <link rel="stylesheet" href="public/container.css">
+
   <style>
-    body {
-      font-family: Helvetica;
-    }
-
-    div.header {
-      border: 1px solid #c6c6c6;
-      border-radius: 4px;
-      margin-left: 25%;
-      margin-right: 25%;
-      margin-top: 5%;
-      margin-bottom: 5%;
-      height: 80px;
-      width: 50%;
-    }
-
-    div.header h1 {
-      margin: 15 0 0 50;
-      color: #333;
-      float: left;
-    }
-
-    div.header div.profile {
-      float: right;
-      margin: 15 50 0 0;
-    }
-
-    div.header div.profile p {
+    div.list p {
       margin: 0;
-    }
-
-    div.header div.profile form.logout {
-      float: right;
-    }
-
-    div.header div.profile form.logout input {
-      background: none;
-      border: none;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 15px;
-      color: #777;
-    }
-
-    div.header h1, div.header p {
-      text-align: center;
+      padding: 5 0 5 0;
+      font-size: 18px;
+      color: #333;
     }
   </style>
 </head>
@@ -59,5 +23,20 @@
     <form class="logout" action="/logout" method="POST">
       <input type="submit" value="Logout" />
     </form>
+  </div>
+</div>
+
+<div class="container no-border">
+  <form action="/tasks" method="POST">
+    <div class="field field-inline">
+      <input type="text" name="name" placeholder="Insira uma nova task" />
+      <input type="submit" value="Inserir task" />
+    </div>
+  </form>
+
+  <div class="list">
+    <y-each-tasks>
+      <p>{{task.name}}</p>
+    </y-each-tasks>
   </div>
 </div>

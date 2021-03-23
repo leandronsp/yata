@@ -4,6 +4,8 @@ require './app/errors/password_not_match_error'
 require './app/errors/email_already_taken_error'
 
 class RegisterActionTest < Test::Unit::TestCase
+  include UserFactory
+
   def setup
     FileUtils.rm('./db/users.txt')
   end
@@ -26,9 +28,7 @@ class RegisterActionTest < Test::Unit::TestCase
   end
 
   def test_register_existing_email
-    File.open('./db/users.txt', 'wb') do |file|
-      file.write('test@acme.com;123')
-    end
+    create_user!('test@acme.com')
 
     assert_raise EmailAlreadyTakenError do
       RegisterAction.call('test@acme.com', 'pass123', 'pass123')

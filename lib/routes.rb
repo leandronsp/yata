@@ -10,7 +10,8 @@ class Routes
     'POST /login'    => :post_login_route,
     'GET /register'  => :get_register_route,
     'POST /register' => :post_register_route,
-    'POST /logout'   => :post_logout_route
+    'POST /logout'   => :post_logout_route,
+    'POST /tasks'    => :post_tasks_route
   }.freeze
 
   def self.route(verb, path, params, headers, cookie)
@@ -26,6 +27,8 @@ class Routes
   end
 
   def process
+    return static_asset_route if @request.static_asset?
+
     route = CONTROLLERS_ROUTER["#{@request.verb} #{@request.path}"]
     return not_found_route unless route
 
@@ -33,6 +36,14 @@ class Routes
   end
 
   private
+
+  def static_asset_route
+    return not_found_route unless File.exists?(@request.static_asset_path)
+
+    body = File.read(@request.static_asset_path)
+
+    { status: 200, body: body }
+  end
 
   def not_found_route
     { status: 404, body: '<h1>Not Found</h1>', headers: { 'Content-Type' => 'text/html' }}
@@ -75,6 +86,13 @@ class Routes
 
   def post_register_route
     controller = RegisterController.new(params: @request.params,
+                                     headers: @request.headers,
+                                     cookie: @request.cookie)
+    controller.create
+  end
+
+  def post_tasks_route
+    controller = TasksController.new(params: @request.params,
                                      headers: @request.headers,
                                      cookie: @request.cookie)
     controller.create

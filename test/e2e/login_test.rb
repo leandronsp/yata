@@ -1,8 +1,6 @@
-require './app/services/password_hashing'
-require './test/e2e/server_test_helper'
-
 class LoginTest < Test::Unit::TestCase
   include ServerTestHelper
+  include UserFactory
 
   def test_login_form
     server.puts(prepare_request("GET /login"))
@@ -11,10 +9,7 @@ class LoginTest < Test::Unit::TestCase
   end
 
   def test_post_login_success
-    File.open('./db/users.txt', 'wb') do |file|
-      password_hash = PasswordHashing.generate_hash('pass123')
-      file.puts("test@acme.com;#{password_hash}")
-    end
+    create_user!('test@acme.com')
 
     server.puts(prepare_request("POST /login",
                                 "Content-Length: 36",

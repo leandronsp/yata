@@ -1,10 +1,10 @@
-require './app/services/password_hashing'
-require './test/e2e/server_test_helper'
-
 class LogoutTest < Test::Unit::TestCase
   include ServerTestHelper
+  include UserFactory
 
   def test_post_logout_success
+    create_user!('test@acme.com')
+
     server.puts(prepare_request("POST /logout",
                                 "Cookie: email=test@acme.com"))
 
