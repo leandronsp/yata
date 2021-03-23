@@ -10,7 +10,8 @@ class Routes
     'POST /login'    => :post_login_route,
     'GET /register'  => :get_register_route,
     'POST /register' => :post_register_route,
-    'POST /logout'   => :post_logout_route
+    'POST /logout'   => :post_logout_route,
+    'POST /tasks'    => :post_tasks_route
   }.freeze
 
   def self.route(verb, path, params, headers, cookie)
@@ -85,6 +86,13 @@ class Routes
 
   def post_register_route
     controller = RegisterController.new(params: @request.params,
+                                     headers: @request.headers,
+                                     cookie: @request.cookie)
+    controller.create
+  end
+
+  def post_tasks_route
+    controller = TasksController.new(params: @request.params,
                                      headers: @request.headers,
                                      cookie: @request.cookie)
     controller.create
