@@ -26,6 +26,8 @@ class Routes
   end
 
   def process
+    return static_asset_route if @request.static_asset?
+
     route = CONTROLLERS_ROUTER["#{@request.verb} #{@request.path}"]
     return not_found_route unless route
 
@@ -33,6 +35,14 @@ class Routes
   end
 
   private
+
+  def static_asset_route
+    return not_found_route unless File.exists?(@request.static_asset_path)
+
+    body = File.read(@request.static_asset_path)
+
+    { status: 200, body: body }
+  end
 
   def not_found_route
     { status: 404, body: '<h1>Not Found</h1>', headers: { 'Content-Type' => 'text/html' }}

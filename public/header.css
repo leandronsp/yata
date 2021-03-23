@@ -1,0 +1,52 @@
+div.header {
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  height: 80px;
+  width: 50%;
+}
+
+div.header h1 {
+  margin: 15 0 0 50;
+  color: #333;
+  float: left;
+}
+
+div.header div.profile {
+  float: right;
+  margin: 15 50 0 0;
+}
+
+div.header div.profile p {
+  margin: 0;
+}
+
+div.header div.login {
+  float: right;
+  margin: 15 50 0 0;
+}
+
+div.header div.login a {
+  margin: 0;
+  float: right;
+}
+
+div.header div.profile form.logout {
+  float: right;
+}
+
+div.header div.profile form.logout input {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 15px;
+  color: #777;
+}
+
+div.header h1, div.header p {
+  text-align: center;
+}

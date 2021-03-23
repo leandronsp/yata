@@ -1,5 +1,3 @@
-require './test/e2e/server_test_helper'
-
 class NotFoundTest < Test::Unit::TestCase
   include ServerTestHelper
 
