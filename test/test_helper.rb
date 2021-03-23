@@ -1,6 +1,9 @@
 require 'test/unit'
 require 'spy/integration'
 
+require './test/e2e/server_test_helper'
+require './test/factories/user'
+
 load './config/environment.rb'
 
 Test::Unit.at_start do

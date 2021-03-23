@@ -1,5 +1,3 @@
-require './test/e2e/server_test_helper'
-
 class HomePageTest < Test::Unit::TestCase
   include ServerTestHelper
 

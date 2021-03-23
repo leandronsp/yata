@@ -1,0 +1,50 @@
+div.container {
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  border: 1px solid #c6c6c6;
+  border-radius: 4px;
+}
+
+div.container h1 {
+  margin: 15 0 0 0;
+  color: #333;
+}
+
+div.container h3 {
+  margin-bottom: 50px;
+}
+
+div.container h1, h3, h4 {
+  text-align: center;
+}
+
+div.container div.field {
+  padding: 10px 150px;
+}
+
+div.container div.field input {
+  width: 100%;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+div.container.no-border {
+  border: 0;
+}
+
+div.container div.field.field-inline {
+  display: inline;
+  padding: 0;
+}
+
+div.container div.field.field-inline input[type=text] {
+  width: 50%;
+}
+
+div.container div.field.field-inline input[type=submit] {
+  width: 20%;
+}

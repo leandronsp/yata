@@ -1,5 +1,3 @@
-require './test/e2e/server_test_helper'
-
 class RegisterThenLoginTest < Test::Unit::TestCase
   include ServerTestHelper
 

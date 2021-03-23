@@ -1,5 +1,3 @@
-require './test/e2e/server_test_helper'
-
 class RegisterTest < Test::Unit::TestCase
   include ServerTestHelper
 
@@ -17,8 +15,5 @@ class RegisterTest < Test::Unit::TestCase
                                 "email=test@acme.com&password=pass123&password_confirmation=pass123"))
 
     assert remove_cr(response).match(/HTTP\/1\.1 301.*?/)
-
-    content = File.read('./db/users.txt')
-    assert_equal 1, content.split("\n").size
   end
 end
