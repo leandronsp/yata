@@ -6,7 +6,6 @@ require './test/e2e/server_test_helper'
 
 Dir[File.join(File.expand_path('..', __dir__), 'test', 'factories', '*.rb')].each { |f| require f }
 
-load './test/base_test.rb'
 load './config/environment.rb'
 
 APP_ENV = 'test'
