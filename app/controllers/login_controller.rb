@@ -21,8 +21,6 @@ class LoginController < BaseController
   end
 
   def destroy
-    ensure_authentication!
-
     render status: 301, 'Location' => "#{FULL_HOST}/",
                         'Set-Cookie' => "email=#{cookie[:email]}; path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT"
   end

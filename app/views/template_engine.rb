@@ -1,6 +1,6 @@
 class TemplateEngine
   def initialize(content)
-    @content = content
+    @content = content.dup
   end
 
   def render
