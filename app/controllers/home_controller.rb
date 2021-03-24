@@ -4,12 +4,11 @@ require './app/views/home/view_model'
 
 class HomeController < BaseController
   def show
-    if email = cookie[:email]
-      tasks = ListUserTasksAction.call(email)
-      body = HomeViewModel.show(email, tasks)
-    else
-      body = HomeViewModel.show
-    end
+    ensure_authentication!
+
+    email = cookie[:email]
+    tasks = ListUserTasksAction.call(email)
+    body  = HomeViewModel.show(email, tasks)
 
     render status: 200, body: body, 'Content-Type' => 'text/html'
   end

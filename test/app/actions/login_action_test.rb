@@ -4,7 +4,7 @@ class LoginActionTest < Test::Unit::TestCase
   include UserFactory
 
   def test_login
-    create_user!('test@acme.com')
+    create_user!(email: 'test@acme.com')
 
     email = LoginAction.call('test@acme.com', 'pass123')
 

@@ -1,8 +1,8 @@
-require './app/controllers/home_controller'
+require './app/controllers/home_guest_controller'
 
-class HomeControllerTest < Test::Unit::TestCase
+class HomeGuestControllerTest < Test::Unit::TestCase
   def test_show
-    controller = HomeController.new
+    controller = HomeGuestController.new
     response = controller.show
 
     assert response[:status] == 200

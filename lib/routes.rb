@@ -1,5 +1,6 @@
 require './lib/request'
 require './lib/response'
+require './app/errors/unauthorized_error'
 
 Dir[File.join(File.expand_path('..', __dir__), 'app', 'controllers', '*_controller.rb')].each { |f| require f }
 
@@ -32,10 +33,18 @@ class Routes
     route = CONTROLLERS_ROUTER["#{@request.verb} #{@request.path}"]
     return not_found_route unless route
 
-    send(route)
+    begin
+      send(route)
+    rescue UnauthorizedError
+      redirect_to_login
+    end
   end
 
   private
+
+  def redirect_to_login
+    { status: 301, headers: { 'Location' => "#{FULL_HOST}/login" }}
+  end
 
   def static_asset_route
     return not_found_route unless File.exists?(@request.static_asset_path)
@@ -50,9 +59,18 @@ class Routes
   end
 
   def get_homepage_route
+    return authenticated_homepage_route if @request.has_authentication_cookie?
+
+    controller = HomeGuestController.new(params: @request.params,
+                                         headers: @request.headers,
+                                         cookie: @request.cookie)
+    controller.show
+  end
+
+  def authenticated_homepage_route
     controller = HomeController.new(params: @request.params,
-                                      headers: @request.headers,
-                                      cookie: @request.cookie)
+                                    headers: @request.headers,
+                                    cookie: @request.cookie)
     controller.show
   end
 

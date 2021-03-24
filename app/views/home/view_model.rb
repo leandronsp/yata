@@ -1,30 +1,19 @@
+require './app/views/template_engine'
+
 class HomeViewModel
-  def self.show(email = nil, tasks = [])
-    if email
-      content =
-        File
-        .read('./app/views/home/authenticated.html')
-        .gsub("\n", " ")
+  def self.show(email, tasks)
+    raw_content = File.read('./app/views/home/show.html').gsub("\n", " ")
 
-      content.gsub("{{email}}", email)
+    engine = TemplateEngine.new(raw_content)
 
-      if matched = content.match(/<y-each-tasks>(.*?)<\/y-each-tasks>/)
-        html_result = tasks.map do |task|
-          matched[1].strip.gsub("{{task.name}}", task.name)
-        end
+    engine.apply_substitution!("{{email}}", email)
 
-        if html_result.any?
-          content =
-            content.gsub(/<y-each-tasks>.*?<\/y-each-tasks>/, html_result.join)
-        else
-          content =
-            content.gsub(/<y-each-tasks>.*?<\/y-each-tasks>/, "")
-        end
-      end
-
-      content.gsub("{{email}}", email)
-    else
-      File.read('./app/views/home/guest.html')
+    engine.apply_tag_substitution!("y-each-tasks") do |html_part|
+      tasks.map do |task|
+        html_part.gsub("{{task.name}}", task.name)
+      end.join
     end
+
+    engine.render
   end
 end

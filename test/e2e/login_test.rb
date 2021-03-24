@@ -9,7 +9,7 @@ class LoginTest < Test::Unit::TestCase
   end
 
   def test_post_login_success
-    create_user!('test@acme.com')
+    create_user!(email: 'test@acme.com')
 
     server.puts(prepare_request("POST /login",
                                 "Content-Length: 36",

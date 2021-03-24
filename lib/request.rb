@@ -18,4 +18,8 @@ class Request
 
     @path[1..-1]
   end
+
+  def has_authentication_cookie?
+    @cookie[:email]
+  end
 end
