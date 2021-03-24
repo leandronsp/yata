@@ -3,10 +3,11 @@ class HomePageTest < Test::Unit::TestCase
   include UserFactory
   include TaskFactory
 
-  def test_home_guest
+  def test_home_unauthenticated
     server.puts(prepare_request("GET /"))
 
-    assert remove_cr(response).match(/HTTP\/1\.1 200.*?Login.*?/)
+    expected_response = /HTTP\/1\.1 301.*?Location:.*?\/login.*?/
+    assert remove_cr(response).match(expected_response)
   end
 
   def test_home_authenticated

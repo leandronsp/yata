@@ -59,15 +59,6 @@ class Routes
   end
 
   def get_homepage_route
-    return authenticated_homepage_route if @request.has_authentication_cookie?
-
-    controller = HomeGuestController.new(params: @request.params,
-                                         headers: @request.headers,
-                                         cookie: @request.cookie)
-    controller.show
-  end
-
-  def authenticated_homepage_route
     controller = HomeController.new(params: @request.params,
                                     headers: @request.headers,
                                     cookie: @request.cookie)
