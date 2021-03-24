@@ -22,10 +22,8 @@ class HomePageTest < Test::Unit::TestCase
   end
 
   def test_home_unauthorized
-    FileUtils.rm('./db/users.txt')
-
     server.puts(prepare_request("GET /",
-                                "Cookie: email=test@acme.com"))
+                                "Cookie: email=unauthorized@acme.com"))
 
     expected_response = /HTTP\/1\.1 301.*?Location:.*?\/login.*?/
     assert remove_cr(response).match(expected_response)

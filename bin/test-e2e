@@ -2,7 +2,7 @@
 
 mkdir -p ./tmp/pids
 rm ./tmp/pids/* 2> /dev/null
-ruby ./bin/server &
+APP_ENV=test ruby ./bin/server &
 
 echo $! > ./tmp/pids/server.pid
 

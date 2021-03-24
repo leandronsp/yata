@@ -3,16 +3,12 @@ class RegisterThenLoginTest < Test::Unit::TestCase
 
   def test_register_then_login
     # Register
-    FileUtils.rm('./db/users.txt')
 
     server.puts(prepare_request("POST /register",
                                 "Content-Length: 66",
                                 "email=test@acme.com&password=pass123&password_confirmation=pass123"))
 
-    assert remove_cr(response).match(/HTTP\/1\.1 301.*?/)
-
-    content = File.read('./db/users.txt')
-    assert_equal 1, content.split("\n").size
+    assert remove_cr(response).match(/HTTP\/1\.1 301.*?Location: http:\/\/localhost:4242\/login/)
 
     refresh!
 
@@ -21,6 +17,6 @@ class RegisterThenLoginTest < Test::Unit::TestCase
                                 "Content-Length: 36",
                                 "email=test@acme.com&password=pass123"))
 
-    assert remove_cr(response).match(/HTTP\/1\.1 301.*?/)
+    assert remove_cr(response).match(/HTTP\/1\.1 301.*?Location: http:\/\/localhost:4242\//)
   end
 end

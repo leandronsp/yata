@@ -1,5 +1,13 @@
+require './database/db'
+load './config/environment.rb'
+
 task :prepare_db do
-  FileUtils.mkdir_p('./db')
+  DB.connection.createdb
+  DB.connection.migratedb
+end
+
+task :reset_db do
+  DB.connection.resetdb
 end
 
 task :test do

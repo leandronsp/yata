@@ -1,16 +1,14 @@
 require './app/models/task'
 require './app/models/user'
+require './database/db'
 
 class TasksRepository
   def initialize
-    @tasks_db = './db/tasks.txt'
-    FileUtils.touch(@tasks_db)
+    @database = DB.connection
   end
 
   def create_task(task)
-    File.open(@tasks_db, 'a') do |file|
-      file.puts("#{task.user_email};#{task.name}")
-    end
+    @database.insert('tasks', task.user.email, task.name)
 
     task
   end
@@ -20,13 +18,10 @@ class TasksRepository
   end
 
   def all
-    content = File.read(@tasks_db)
+    @database.select_all('tasks').map do |row|
+      user = User.new(email: row[0])
 
-    content.split("\n").map do |row|
-      user_email, task_name = row.split(';')
-
-      user = User.new(email: user_email)
-      Task.new(user: user, name: task_name)
+      Task.new(user: user, name: row[1])
     end
   end
 end

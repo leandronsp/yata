@@ -1,15 +1,13 @@
 require './app/models/user'
+require './database/db'
 
 class UsersRepository
   def initialize
-    @users_db = './db/users.txt'
-    FileUtils.touch(@users_db)
+    @database = DB.connection
   end
 
   def create_user(user)
-    File.open(@users_db, 'a') do |file|
-      file.puts("#{user.email};#{user.password}")
-    end
+    @database.insert('users', user.email, user.password)
 
     user.email
   end
@@ -19,11 +17,8 @@ class UsersRepository
   end
 
   def all
-    content = File.read(@users_db)
-
-    content.split("\n").map do |row|
-      email, password = row.split(';')
-      User.new(email: email, password: password)
+    @database.select_all('users').map do |row|
+      User.new(email: row[0], password: row[1])
     end
   end
 end
