@@ -3,7 +3,7 @@ class CreateTaskTest < Test::Unit::TestCase
   include UserFactory
 
   def test_post_task_success
-    create_user!('test@acme.com')
+    create_user!(email: 'test@acme.com')
 
     server.puts(prepare_request(
       "POST /tasks",

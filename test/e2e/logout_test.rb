@@ -3,7 +3,7 @@ class LogoutTest < Test::Unit::TestCase
   include UserFactory
 
   def test_post_logout_success
-    create_user!('test@acme.com')
+    create_user!(email: 'test@acme.com')
 
     server.puts(prepare_request("POST /logout",
                                 "Cookie: email=test@acme.com"))

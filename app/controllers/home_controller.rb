@@ -1,9 +1,14 @@
 require './app/controllers/base_controller'
+require './app/actions/list_user_tasks_action'
 require './app/views/home/view_model'
 
 class HomeController < BaseController
   def show
-    body = HomeViewModel.show(cookie[:email])
+    ensure_authentication!
+
+    email = cookie[:email]
+    tasks = ListUserTasksAction.call(email)
+    body  = HomeViewModel.show(email, tasks)
 
     render status: 200, body: body, 'Content-Type' => 'text/html'
   end

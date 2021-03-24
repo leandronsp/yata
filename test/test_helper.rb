@@ -2,7 +2,8 @@ require 'test/unit'
 require 'spy/integration'
 
 require './test/e2e/server_test_helper'
-require './test/factories/user'
+
+Dir[File.join(File.expand_path('..', __dir__), 'test', 'factories', '*.rb')].each { |f| require f }
 
 load './config/environment.rb'
 

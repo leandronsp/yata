@@ -28,7 +28,7 @@ class RegisterActionTest < Test::Unit::TestCase
   end
 
   def test_register_existing_email
-    create_user!('test@acme.com')
+    create_user!(email: 'test@acme.com')
 
     assert_raise EmailAlreadyTakenError do
       RegisterAction.call('test@acme.com', 'pass123', 'pass123')

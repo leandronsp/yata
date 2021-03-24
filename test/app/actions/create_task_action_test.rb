@@ -9,7 +9,7 @@ class CreateTaskActionTest < Test::Unit::TestCase
   end
 
   def test_create
-    create_user!('test@acme.com')
+    create_user!(email: 'test@acme.com')
 
     task = CreateTaskAction.call('test@acme.com', 'My first task!')
 

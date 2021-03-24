@@ -24,7 +24,7 @@ APP_FOLDER=yata-web
 ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/tmp/pids"
 ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/db"
 
-scp -r app/ config/ bin/ lib/ iac-deploy/ Gemfile Gemfile.lock Rakefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
+scp -r app/ public/ config/ bin/ lib/ iac-deploy/ Gemfile Gemfile.lock Rakefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
 
 ssh $REMOTE_HOST "sed -i \"/APP_PROTOCOL/d\" ~/.bashrc && echo \"export APP_PROTOCOL=https\" >> ~/.bashrc"
 ssh $REMOTE_HOST "sed -i \"/APP_HOST/d\" ~/.bashrc && echo \"export APP_HOST=$HOST_DOMAIN\" >> ~/.bashrc"
