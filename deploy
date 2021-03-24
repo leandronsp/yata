@@ -22,12 +22,14 @@ ssh $REMOTE_HOST "$SETUP_RUBY"
 APP_FOLDER=yata-web
 
 ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/tmp/pids"
-ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/db"
 
-scp -r app/ public/ config/ bin/ lib/ iac-deploy/ Gemfile Gemfile.lock Rakefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
+scp -r app/ public/ config/ bin/ lib/ database/ iac-deploy/ Gemfile Gemfile.lock Rakefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
 
 ssh $REMOTE_HOST "sed -i \"/APP_PROTOCOL/d\" ~/.bashrc && echo \"export APP_PROTOCOL=https\" >> ~/.bashrc"
 ssh $REMOTE_HOST "sed -i \"/APP_HOST/d\" ~/.bashrc && echo \"export APP_HOST=$HOST_DOMAIN\" >> ~/.bashrc"
+ssh $REMOTE_HOST "sed -i \"/APP_ENV/d\" ~/.bashrc && echo \"export APP_ENV=production\" >> ~/.bashrc"
+
+ssh $REMOTE_HOST "bash -lc \"cd yata-web && bundle && bundle exec rake prepare_db\""
 
 SETUP_SYSTEMD="sudo cp $APP_FOLDER/iac-deploy/systemd/yata.service /etc/systemd/system/yata.service && \
   sudo systemctl enable yata && \

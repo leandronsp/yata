@@ -1,8 +1,13 @@
 require './app/actions/list_user_tasks_action'
+require './database/db'
 
 class ListUserTasksActionTest < Test::Unit::TestCase
   include UserFactory
   include TaskFactory
+
+  def setup
+    DB.connection.resetdb
+  end
 
   def test_create
     user = create_user!(email: 'test@acme.com')

@@ -4,6 +4,7 @@ module ServerTestHelper
   attr_reader :server
 
   def setup
+    DB.connection.resetdb rescue nil
     @server = TCPSocket.open('localhost', 4242)
   end
 
