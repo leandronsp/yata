@@ -31,6 +31,16 @@ class FSDatabase
     File.open(filepath(table_name), 'a') { |file| file.puts(fields.join(';')) }
   end
 
+  def delete(table_name, id)
+    content = File.read(filepath(table_name))
+
+    new_content = content.split("\n").delete_if do |row|
+      row == id
+    end
+
+    File.open(filepath(table_name), 'w') { |file| file.puts(new_content) }
+  end
+
   def select_all(table_name)
     content = File.read(filepath(table_name))
 
