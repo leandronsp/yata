@@ -5,14 +5,15 @@ require './app/errors/unauthorized_error'
 Dir[File.join(File.expand_path('..', __dir__), 'app', 'controllers', '*_controller.rb')].each { |f| require f }
 
 class Routes
-  CONTROLLERS_ROUTER = {
-    'GET /'          => :get_homepage_route,
-    'GET /login'     => :get_login_route,
-    'POST /login'    => :post_login_route,
-    'GET /register'  => :get_register_route,
-    'POST /register' => :post_register_route,
-    'POST /logout'   => :post_logout_route,
-    'POST /tasks'    => :post_tasks_route
+  ROUTES_TABLE = {
+    'GET /'             => :get_homepage_route,
+    'GET /login'        => :get_login_route,
+    'POST /login'       => :post_login_route,
+    'GET /register'     => :get_register_route,
+    'POST /register'    => :post_register_route,
+    'POST /logout'      => :post_logout_route,
+    'POST /tasks'       => :post_tasks_route,
+    'DELETE /tasks/:id' => :delete_tasks_route
   }.freeze
 
   def self.route(verb, path, params, headers, cookie)
@@ -30,7 +31,8 @@ class Routes
   def process
     return static_asset_route if @request.static_asset?
 
-    route = CONTROLLERS_ROUTER["#{@request.verb} #{@request.path}"]
+    route = first_lookup || second_lookup
+
     return not_found_route unless route
 
     begin
@@ -41,6 +43,19 @@ class Routes
   end
 
   private
+
+  def first_lookup
+    ROUTES_TABLE["#{@request.verb} #{@request.path}"]
+  end
+
+  def second_lookup
+    constraint = @request.path.match(/^\/(tasks)\/([\w\d ]+)$/)
+    return unless constraint
+
+    resource_name, resource_id = constraint.values_at(1, 2)
+    @request.add_param(:id, resource_id)
+    ROUTES_TABLE["#{@request.verb} /#{resource_name}/:id"]
+  end
 
   def redirect_to_login
     { status: 301, headers: { 'Location' => "#{FULL_HOST}/login" }}
@@ -105,5 +120,12 @@ class Routes
                                      headers: @request.headers,
                                      cookie: @request.cookie)
     controller.create
+  end
+
+  def delete_tasks_route
+    controller = TasksController.new(params: @request.params,
+                                     headers: @request.headers,
+                                     cookie: @request.cookie)
+    controller.destroy
   end
 end

@@ -4,13 +4,26 @@
   <link rel="stylesheet" href="public/yata.css">
   <link rel="stylesheet" href="public/header.css">
   <link rel="stylesheet" href="public/container.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
-    div.list p {
-      margin: 0;
+    div.list div.item {
+      display: flex;
+      width: 50%;
       padding: 5 0 5 0;
       font-size: 18px;
       color: #333;
+      border-bottom: 1px solid #c6c6c6;
+      margin-bottom: 20px;
+    }
+
+    div.list div.item p {
+      margin: 0;
+      width: 100%;
+    }
+
+    div.list div.item span {
+      cursor: pointer;
     }
   </style>
 </head>
@@ -36,7 +49,27 @@
 
   <div class="list">
     <y-each-tasks>
-      <p>{{task.name}}</p>
+      <div class="item">
+        <p>{{task.name}}</p>
+        <span class="material-icons" onclick="deleteTask(this)" data-task-id="{{task.id}}">delete</span>
+      </div>
     </y-each-tasks>
   </div>
 </div>
+
+<script type="text/javascript">
+  function deleteTask(element) {
+    var taskId = element.dataset["taskId"];
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 206) {
+        element.parentElement.remove();
+      }
+    };
+
+    xhttp.open("DELETE", "/tasks/" + taskId, true);
+    xhttp.send();
+  }
+</script>

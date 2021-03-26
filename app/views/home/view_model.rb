@@ -10,7 +10,9 @@ class HomeViewModel
 
     engine.apply_tag_substitution!("y-each-tasks") do |html_part|
       tasks.map do |task|
-        html_part.gsub("{{task.name}}", task.name)
+        html_part
+          .gsub("{{task.name}}", task.name)
+          .gsub("{{task.id}}", task.name)
       end.join
     end
 

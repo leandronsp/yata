@@ -21,6 +21,7 @@ class Application
         process!(client)
       rescue => error
         puts error
+        puts error.backtrace
       end
 
       # Closes the client connection

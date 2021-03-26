@@ -13,6 +13,12 @@ class TasksRepository
     task
   end
 
+  def delete_task(task)
+    id = "#{task.user_email};#{task.name}"
+
+    @database.delete('tasks', id)
+  end
+
   def all_tasks_by_user(user)
     all.select { |model| model.user_email == user.email }
   end

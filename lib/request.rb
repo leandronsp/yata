@@ -1,8 +1,14 @@
+require 'cgi'
+
 class Request
   attr_reader :verb, :path, :params, :headers, :cookie
 
   def initialize(verb, path, params, headers, cookie)
-    @verb, @path, @params, @headers, @cookie = verb, path, params, headers, cookie
+    @verb, @path, @params, @headers, @cookie = verb, CGI.unescape(path), params, headers, cookie
+  end
+
+  def add_param(name, value)
+    @params[name] = value
   end
 
   def static_asset?
