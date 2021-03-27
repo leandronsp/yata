@@ -1,5 +1,5 @@
 require './app/controllers/base_controller'
-require './app/views/login/view_model'
+require './app/frontend/components/login/view_model'
 require './app/actions/login_action'
 
 class LoginController < BaseController

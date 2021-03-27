@@ -1,0 +1,40 @@
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="app/frontend/stylesheets/yata.css">
+  <link rel="stylesheet" href="app/frontend/stylesheets/header.css">
+  <link rel="stylesheet" href="app/frontend/stylesheets/container.css">
+  <link rel="stylesheet" href="app/frontend/stylesheets/lists.css">
+
+  <script type="text/javascript" src="app/frontend/components/home/index.js"></script>
+</head>
+
+<div class="header">
+  <h1><a href="/">Yata</a></h1>
+  <div class="profile">
+    <p>Olá, {{email}}!</p>
+
+    <form class="logout" action="/logout" method="POST">
+      <input type="submit" value="Logout" />
+    </form>
+  </div>
+</div>
+
+<div class="container no-border">
+  <form action="/tasks" method="POST">
+    <div class="field field-inline">
+      <input type="text" name="name" placeholder="Insira uma nova task" />
+      <input type="submit" value="Inserir task" />
+    </div>
+  </form>
+
+  <div class="list">
+    <y-each-tasks>
+      <div class="item">
+        <p>{{task.name}}</p>
+        <span class="material-icons" onclick="deleteTask(this)" data-task-id="{{task.id}}">delete</span>
+      </div>
+    </y-each-tasks>
+  </div>
+</div>
