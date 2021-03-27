@@ -55,7 +55,7 @@ class Routes
   end
 
   def second_lookup
-    constraint = @request.path.match(/^\/(tasks)\/([\w\d ]+)$/)
+    constraint = @request.path.match(/^\/(tasks)\/(.*?)$/)
     return unless constraint
 
     resource_name, resource_id = constraint.values_at(1, 2)

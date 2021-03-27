@@ -5,7 +5,7 @@ class CreateTaskTest < Test::Unit::TestCase
   def test_post_task_success
     create_user!(email: 'test@acme.com')
 
-    server.puts(prepare_request(
+    server.print(prepare_request(
       "POST /tasks",
       "Cookie: email=test@acme.com\r\nContent-Length: 32",
       "name=Finish server configuration"

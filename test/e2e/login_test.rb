@@ -3,7 +3,7 @@ class LoginTest < Test::Unit::TestCase
   include UserFactory
 
   def test_login_form
-    server.puts(prepare_request("GET /login"))
+    server.print(prepare_request("GET /login"))
 
     assert remove_cr(response).match(/HTTP\/1\.1 200.*?/)
   end
@@ -11,7 +11,7 @@ class LoginTest < Test::Unit::TestCase
   def test_post_login_success
     create_user!(email: 'test@acme.com')
 
-    server.puts(prepare_request("POST /login",
+    server.print(prepare_request("POST /login",
                                 "Content-Length: 36",
                                 "email=test@acme.com&password=pass123"))
 
@@ -20,7 +20,7 @@ class LoginTest < Test::Unit::TestCase
   end
 
   def test_post_login_unauthorized
-    server.puts(prepare_request("POST /login",
+    server.print(prepare_request("POST /login",
                                 "Content-Length: 37",
                                 "email=wrong@acme.com&password=pass123"))
 
