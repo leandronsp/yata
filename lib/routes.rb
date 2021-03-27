@@ -6,7 +6,7 @@ Dir[File.join(File.expand_path('..', __dir__), 'app', 'controllers', '*_controll
 
 class Routes
   ROUTES_TABLE = {
-    'GET /'             => :get_homepage_route,
+    'GET /'             => :get_spa_route,
     'GET /login'        => :get_login_route,
     'POST /login'       => :post_login_route,
     'GET /register'     => :get_register_route,
@@ -64,13 +64,23 @@ class Routes
   def static_asset_route
     return not_found_route unless File.exists?(@request.static_asset_path)
 
-    body = File.read(@request.static_asset_path)
+    body         = File.read(@request.static_asset_path)
+    extension    = File.extname(@request.static_asset_path)
+    content_type = extension == '.js' ? 'text/javascript' : nil
+    headers      = content_type ? { 'Content-Type' => content_type } : {}
 
-    { status: 200, body: body }
+    { status: 200, body: body, headers: headers }
   end
 
   def not_found_route
     { status: 404, body: '<h1>Not Found</h1>', headers: { 'Content-Type' => 'text/html' }}
+  end
+
+  def get_spa_route
+    controller = SpaController.new(params: @request.params,
+                                   headers: @request.headers,
+                                   cookie: @request.cookie)
+    controller.bootstrap
   end
 
   def get_homepage_route

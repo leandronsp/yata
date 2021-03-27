@@ -1,5 +1,6 @@
 require './app/actions/find_user_action'
 require './app/errors/unauthorized_error'
+require 'json'
 
 class BaseController
   attr_reader :params, :headers, :cookie
@@ -22,5 +23,9 @@ class BaseController
   def ensure_authentication!
     raise UnauthorizedError unless cookie[:email]
     raise UnauthorizedError unless FindUserAction.call(cookie[:email])
+  end
+
+  def json_response(body)
+    body.to_json
   end
 end

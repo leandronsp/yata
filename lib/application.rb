@@ -1,7 +1,7 @@
 require 'cgi'
 require 'uri'
 require 'socket'
-require './lib/routes'
+require './lib/route_proxy'
 
 class Application
   def initialize(port)
@@ -33,7 +33,7 @@ class Application
 
   def process!(client)
     # Processes the request and routes to the application controllers
-    controller_response = Routes.route(*parse_request(client))
+    controller_response = RouteProxy.proxy(*parse_request(client))
 
     # Sends the response to the client
     response = build_response(controller_response)
