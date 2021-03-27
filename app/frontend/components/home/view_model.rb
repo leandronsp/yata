@@ -1,8 +1,8 @@
-require './app/views/template_engine'
+require './app/frontend/template_engine'
 
 class HomeViewModel
   def self.show(email, tasks)
-    raw_content = File.read('./app/views/home/show.html').gsub("\n", " ")
+    raw_content = File.read('./app/frontend/components/home/index.html').gsub("\n", " ")
 
     engine = TemplateEngine.new(raw_content)
 

@@ -16,6 +16,12 @@ class Routes
     'DELETE /tasks/:id' => :delete_tasks_route
   }.freeze
 
+  MIME_TYPES_TABLE = {
+    '.js' => 'text/javascript',
+    '.css' => 'text/css',
+    '.html' => 'text/html'
+  }.freeze
+
   def self.route(verb, path, params, headers, cookie)
     request = Request.new(verb, path, params, headers, cookie)
     response = Response.new
@@ -65,8 +71,10 @@ class Routes
     return not_found_route unless File.exists?(@request.static_asset_path)
 
     body = File.read(@request.static_asset_path)
+    extension = File.extname(@request.static_asset_path)
+    content_type = MIME_TYPES_TABLE[extension]
 
-    { status: 200, body: body }
+    { status: 200, body: body, headers: { 'Content-Type' => content_type }}
   end
 
   def not_found_route

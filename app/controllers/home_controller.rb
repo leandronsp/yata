@@ -1,6 +1,6 @@
 require './app/controllers/base_controller'
 require './app/actions/list_user_tasks_action'
-require './app/views/home/view_model'
+require './app/frontend/components/home/view_model'
 
 class HomeController < BaseController
   def show

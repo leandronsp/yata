@@ -1,5 +1,5 @@
 require './app/controllers/base_controller'
-require './app/views/register/view_model'
+require './app/frontend/components/register/view_model'
 require './app/actions/register_action'
 require './app/errors/password_not_match_error'
 require './app/errors/email_already_taken_error'

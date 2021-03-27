@@ -12,7 +12,15 @@ class Request
   end
 
   def static_asset?
-    @path.match?(/^\/public\/.*?/)
+    path_looks_like_static? && extension_looks_like_static?
+  end
+
+  def path_looks_like_static?
+    @path.match?(/^\/public\/.*?/) || @path.match?(/^\/app\/frontend\/.*?/)
+  end
+
+  def extension_looks_like_static?
+    @path.match?(/.*?\.(js|css)$/)
   end
 
   ## Removes the first character, "/"
