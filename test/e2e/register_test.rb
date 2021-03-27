@@ -2,14 +2,14 @@ class RegisterTest < Test::Unit::TestCase
   include ServerTestHelper
 
   def test_register
-    server.puts(prepare_request("GET /register"))
+    server.print(prepare_request("GET /register"))
 
     assert remove_cr(response).match(/HTTP\/1\.1 200.*?/)
   end
 
   def test_post_register_success
-    puts File.read('./.yata-db-test/users.txt')
-    server.puts(prepare_request("POST /register",
+    print File.read('./.yata-db-test/users.txt')
+    server.print(prepare_request("POST /register",
                                 "Content-Length: 66",
                                 "email=test@acme.com&password=pass123&password_confirmation=pass123"))
 

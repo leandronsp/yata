@@ -1,3 +1,4 @@
 .yata-db-*
 tmp/
 Pulumi.*.yaml
+.byebug*

@@ -2,20 +2,35 @@ GEM
   remote: https://rubygems.org/
   specs:
     bcrypt (3.1.16)
+    byebug (11.1.3)
+    daemons (1.3.1)
+    eventmachine (1.2.7)
+    nio4r (2.5.7)
     power_assert (2.0.0)
+    puma (5.2.2)
+      nio4r (~> 2.0)
+    rack (2.2.3)
     rake (13.0.3)
     spy (1.0.1)
     test-unit (3.4.0)
       power_assert
+    thin (1.8.0)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (>= 1, < 3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bcrypt
+  byebug
+  puma
+  rack
   rake
   spy
   test-unit
+  thin
 
 BUNDLED WITH
    2.1.4

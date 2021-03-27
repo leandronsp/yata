@@ -5,7 +5,7 @@ class LogoutTest < Test::Unit::TestCase
   def test_post_logout_success
     create_user!(email: 'test@acme.com')
 
-    server.puts(prepare_request("POST /logout",
+    server.print(prepare_request("POST /logout",
                                 "Cookie: email=test@acme.com"))
 
 

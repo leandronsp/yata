@@ -4,7 +4,7 @@ class HomePageTest < Test::Unit::TestCase
   include TaskFactory
 
   def test_home_unauthenticated
-    server.puts(prepare_request("GET /"))
+    server.print(prepare_request("GET /"))
 
     expected_response = /HTTP\/1\.1 301.*?Location:.*?\/login.*?/
     assert remove_cr(response).match(expected_response)
@@ -14,7 +14,7 @@ class HomePageTest < Test::Unit::TestCase
     user = create_user!(email: 'test@acme.com')
     task = create_task!(user: user, name: 'My first task')
 
-    server.puts(prepare_request("GET /",
+    server.print(prepare_request("GET /",
                                 "Cookie: email=test@acme.com"))
 
     expected_response = /HTTP\/1\.1 200.*?test@acme\.com.*?My first task.*?/
@@ -22,7 +22,7 @@ class HomePageTest < Test::Unit::TestCase
   end
 
   def test_home_unauthorized
-    server.puts(prepare_request("GET /",
+    server.print(prepare_request("GET /",
                                 "Cookie: email=unauthorized@acme.com"))
 
     expected_response = /HTTP\/1\.1 301.*?Location:.*?\/login.*?/
