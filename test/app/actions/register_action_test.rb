@@ -7,7 +7,7 @@ class RegisterActionTest < Test::Unit::TestCase
   include UserFactory
 
   def setup
-    DB.connection.resetdb
+    DB.connection.truncatedb
   end
 
   def test_register

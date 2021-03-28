@@ -18,7 +18,7 @@ class UsersRepository
 
   def all
     @database.select_all('users').map do |row|
-      User.new(email: row[0], password: row[1])
+      User.new(id: row['id'], email: row['email'], password: row['password'])
     end
   end
 end

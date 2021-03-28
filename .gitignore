@@ -1,4 +1,6 @@
 .yata-db-*
+.yata_*
 tmp/
 Pulumi.*.yaml
 .byebug*
+database/config.production.yml

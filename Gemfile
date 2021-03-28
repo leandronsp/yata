@@ -5,6 +5,7 @@ gem 'rake'
 gem 'rack'
 gem 'puma'
 gem 'thin'
+gem 'pg'
 
 group :development, :test do
   gem 'byebug'

@@ -14,7 +14,7 @@ class TasksController < BaseController
   def destroy
     ensure_authentication!
 
-    DeleteTaskAction.call(cookie[:email], params[:id])
+    DeleteTaskAction.call(params[:id])
 
     render status: 206
   end

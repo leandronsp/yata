@@ -8,15 +8,13 @@ class TasksRepository
   end
 
   def create_task(task)
-    @database.insert('tasks', task.user.email, task.name)
+    @database.insert('tasks', task.name, task.user_id)
 
     task
   end
 
   def delete_task(task)
-    id = "#{task.user_email};#{task.name}"
-
-    @database.delete('tasks', id)
+    @database.delete('tasks', task.id)
   end
 
   def all_tasks_by_user(user)
@@ -25,9 +23,10 @@ class TasksRepository
 
   def all
     @database.select_all('tasks').map do |row|
-      user = User.new(email: row[0])
+      user_row = @database.find('users', row['user_id'])
+      user = User.new(id: user_row['id'], email: user_row['email'], password: user_row['password'])
 
-      Task.new(user: user, name: row[1])
+      Task.new(user: user, id: row['id'], name: row['name'])
     end
   end
 end
