@@ -3,9 +3,8 @@ require './app/actions/base_action'
 require './app/repositories/tasks_repository'
 
 class DeleteTaskAction < BaseAction
-  def initialize(email, task_name)
-    user = UsersRepository.new.find_by_email(email)
-    @task = Task.new(user: user, name: task_name)
+  def initialize(task_id)
+    @task = Task.new(id: task_id)
 
     @tasks_repository = TasksRepository.new
   end

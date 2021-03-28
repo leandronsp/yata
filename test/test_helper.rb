@@ -1,6 +1,7 @@
 require 'test/unit'
 require 'spy/integration'
 require './database/db'
+require 'byebug'
 
 require './test/e2e/server_test_helper'
 
@@ -15,5 +16,5 @@ Test::Unit.at_start do
 end
 
 Test::Unit.at_exit do
-  DB.connection.dropdb rescue nil
+  DB.connection.dropdb
 end

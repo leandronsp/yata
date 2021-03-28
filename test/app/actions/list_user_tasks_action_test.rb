@@ -6,7 +6,7 @@ class ListUserTasksActionTest < Test::Unit::TestCase
   include TaskFactory
 
   def setup
-    DB.connection.resetdb
+    DB.connection.truncatedb
   end
 
   def test_create

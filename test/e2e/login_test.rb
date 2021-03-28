@@ -15,7 +15,6 @@ class LoginTest < Test::Unit::TestCase
                                 "Content-Length: 36",
                                 "email=test@acme.com&password=pass123"))
 
-
     assert remove_cr(response).match(/HTTP\/1\.1 301.*?/)
   end
 

@@ -6,14 +6,14 @@ class DeleteTaskActionTest < Test::Unit::TestCase
   include TaskFactory
 
   def setup
-    DB.connection.resetdb
+    DB.connection.truncatedb
   end
 
   def test_create
     user = create_user!(email: 'test@acme.com')
-    create_task!(user: user, name: 'My first task!')
+    task = create_task!(user: user, name: 'My first task!')
 
-    DeleteTaskAction.call('test@acme.com', 'My first task!')
+    DeleteTaskAction.call(task.id)
 
     user_tasks = TasksRepository.new.all_tasks_by_user(user)
     assert_equal 0, user_tasks.size

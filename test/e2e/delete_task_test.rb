@@ -8,7 +8,7 @@ class DeleteTaskTest < Test::Unit::TestCase
     create_task!(user: user, name: 'My first task!')
 
     server.print(prepare_request(
-      "DELETE /tasks/My+first+task%21",
+      "DELETE /tasks/1",
       "Cookie: email=test@acme.com"
     ))
 

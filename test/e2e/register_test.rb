@@ -8,7 +8,6 @@ class RegisterTest < Test::Unit::TestCase
   end
 
   def test_post_register_success
-    print File.read('./.yata-db-test/users.txt')
     server.print(prepare_request("POST /register",
                                 "Content-Length: 66",
                                 "email=test@acme.com&password=pass123&password_confirmation=pass123"))

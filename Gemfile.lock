@@ -6,6 +6,7 @@ GEM
     daemons (1.3.1)
     eventmachine (1.2.7)
     nio4r (2.5.7)
+    pg (0.21.0)
     power_assert (2.0.0)
     puma (5.2.2)
       nio4r (~> 2.0)
@@ -25,6 +26,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   byebug
+  pg
   puma
   rack
   rake
