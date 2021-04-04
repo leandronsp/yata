@@ -1,3 +1,7 @@
+div.list {
+  margin-top: 10px;
+}
+
 div.list div.item {
   display: flex;
   width: 50%;

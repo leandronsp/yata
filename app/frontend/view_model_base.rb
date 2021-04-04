@@ -24,6 +24,10 @@ class ViewModelBase
     @engine.apply_tag_substitution!(tag, &block)
   end
 
+  def render_partial(tag, &block)
+    @engine.render_partial!(tag, &block)
+  end
+
   def render
     @engine.render
   end

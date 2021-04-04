@@ -1,14 +1,21 @@
 require './app/controllers/base_controller'
 require './app/actions/create_task_action'
 require './app/actions/delete_task_action'
+require './app/actions/list_user_tasks_action'
+require './app/frontend/components/home/view_model'
 
 class TasksController < BaseController
   def create
     ensure_authentication!
 
-    task = CreateTaskAction.call(cookie[:email], params[:name])
+    email = cookie[:email]
 
-    render status: 301, 'Location' => "#{FULL_HOST}/"
+    CreateTaskAction.call(email, params[:name])
+
+    tasks = ListUserTasksAction.call(email)
+    body  = HomeViewModel.tasks_partial(tasks)
+
+    render status: 200, body: body, 'Content-Type' => 'text/html'
   end
 
   def destroy

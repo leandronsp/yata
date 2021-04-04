@@ -1,4 +1,5 @@
 require 'rack'
+require 'json'
 require './lib/routes'
 
 class RackApp
@@ -11,13 +12,20 @@ class RackApp
   end
 
   def process_request(request)
-    verb = request.request_method
-    path = request.path
-    params = request.params.transform_keys(&:to_sym)
+    verb    = request.request_method
+    path    = request.path
+    params  = process_params(request)
     headers = request.env
     cookies = request.cookies.transform_keys(&:to_sym)
 
     [verb, path, params, headers, cookies]
+  end
+
+  def process_params(request)
+    request_params = request.params
+    body_params    = request.post? ? (JSON.parse(request.body.read) rescue {}) : {}
+
+    request_params.merge(body_params).transform_keys(&:to_sym)
   end
 
   def build_response(attrs = {})

@@ -7,10 +7,10 @@ class CreateTaskTest < Test::Unit::TestCase
 
     server.print(prepare_request(
       "POST /tasks",
-      "Cookie: email=test@acme.com\r\nContent-Length: 32",
-      "name=Finish server configuration"
+      "Cookie: email=test@acme.com\r\nContent-Type: application/json\r\nContent-Length: 38",
+      "{\"name\":\"Finish server configuration\"}"
     ))
 
-    assert remove_cr(response).match(/HTTP\/1\.1 301.*?/)
+    assert remove_cr(response).match(/HTTP\/1\.1 200.*?/)
   end
 end
