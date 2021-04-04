@@ -10,28 +10,19 @@ SETUP_DEPENDENCIES="gcc gcc-c++ patch readline readline-devel zlib zlib-devel \
 ssh $REMOTE_HOST "sudo yum install -y $SETUP_DEPENDENCIES"
 ssh $REMOTE_HOST "sudo service docker start"
 
-SETUP_RUBY="curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - && \
-  curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import - && \
-  curl -L get.rvm.io | bash -s stable && \
-  source /home/ec2-user/.rvm/scripts/rvm && \
-  rvm reload && \
-  rvm install 2.7 && \
-  rvm use 2.7 --default"
-
-ssh $REMOTE_HOST "$SETUP_RUBY"
-
 APP_FOLDER=yata-web
 
 ssh $REMOTE_HOST "mkdir -p $APP_FOLDER/tmp/pids"
 
-scp -r app/ config/ bin/ lib/ database/ iac-deploy/ Gemfile Gemfile.lock Rakefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
+scp -r app/ config/ bin/ lib/ database/ iac-deploy/ Gemfile Gemfile.lock Rakefile Makefile LICENSE README.md $REMOTE_HOST:~/$APP_FOLDER
 ssh $REMOTE_HOST "bash -lc \"cd yata-web && cp database/config.production.yml database/config.yml\""
 
 ssh $REMOTE_HOST "sed -i \"/APP_PROTOCOL/d\" ~/.bashrc && echo \"export APP_PROTOCOL=https\" >> ~/.bashrc"
 ssh $REMOTE_HOST "sed -i \"/APP_HOST/d\" ~/.bashrc && echo \"export APP_HOST=$HOST_DOMAIN\" >> ~/.bashrc"
 ssh $REMOTE_HOST "sed -i \"/APP_ENV/d\" ~/.bashrc && echo \"export APP_ENV=production\" >> ~/.bashrc"
 
-ssh $REMOTE_HOST "bash -lc \"cd yata-web && bundle && bundle exec rake migratedb\""
+ssh $REMOTE_HOST "bash -lc \"cd yata-web && make startpg\""
+ssh $REMOTE_HOST "bash -lc \"cd yata-web && make migratedb\""
 
 SETUP_SYSTEMD="sudo cp $APP_FOLDER/iac-deploy/systemd/yata.service /etc/systemd/system/yata.service && \
   sudo systemctl enable yata && \

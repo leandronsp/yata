@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ -z "$APP_ENV" ]
+then
+  echo "APP_ENV is empty"
+  exit 1
+fi
+
+container="yata_$APP_ENV"
+dbname="yata_$APP_ENV"
+username="yata"
+password="yata"
+network="yata"
+
+runAs=""
+
+if [ "$APP_ENV" == "production" ]
+then
+  runAs="sudo"
+fi
+
+$runAs docker network create $network
+
+$runAs docker run \
+  --name $container \
+  --network $network \
+  -e POSTGRES_USER=$username \
+  -e POSTGRES_PASSWORD=$password \
+  -e POSTGRES_DB=$dbname \
+  -e PGDATA=/var/lib/postgresql/data/pgdata  \
+  -v $HOME/.$dbname/data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  -d \
+  postgres:11

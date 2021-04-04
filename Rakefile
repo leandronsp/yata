@@ -14,11 +14,11 @@ task :test do
 end
 
 task :server do
-  ruby "./bin/server"
+  ruby "./lib/run-server"
 end
 
 task :e2e do
-  sh "./bin/test-e2e"
+  sh "./test/run-e2e"
 end
 
 task :createpg, [:sudoer] do |t, args|

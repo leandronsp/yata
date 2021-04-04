@@ -6,7 +6,7 @@ Type=simple
 Restart=Always
 WorkingDirectory=/home/ec2-user/yata-web
 User=ec2-user
-ExecStart=/bin/bash -lc "bundle exec rake server"
+ExecStart=/bin/bash -lc "make serve"
 
 [Install]
 WantedBy=multi-user.target
