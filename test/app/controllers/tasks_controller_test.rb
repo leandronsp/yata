@@ -1,5 +1,6 @@
 require './app/controllers/tasks_controller'
 require './app/actions/create_task_action'
+require './app/actions/list_user_tasks_action'
 
 class TasksControllerTest < Test::Unit::TestCase
   include UserFactory
@@ -9,6 +10,7 @@ class TasksControllerTest < Test::Unit::TestCase
     create_user!(email: 'test@acme.com')
 
     action_spy = Spy.on(CreateTaskAction, :call)
+    action_spy = Spy.on(ListUserTasksAction, :call).and_return([])
 
     controller = TasksController.new(
       cookie: { email: 'test@acme.com' },
@@ -19,8 +21,7 @@ class TasksControllerTest < Test::Unit::TestCase
 
     assert action_spy.has_been_called?
 
-    assert response[:status] == 301
-    assert response[:headers]['Location'] == 'http://localhost:4242/'
+    assert response[:status] == 200
   end
 
   def test_destroy_success

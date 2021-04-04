@@ -20,4 +20,13 @@ class TemplateEngine
       @content.gsub!(regex_substitution_tag, html_result)
     end
   end
+
+  def render_partial!(tag_name)
+    regex_substitution_tag = /<#{tag_name}>(.*?)<\/#{tag_name}>/
+
+    if matched = @content.match(regex_substitution_tag)
+      html_result = yield(matched[1].strip)
+      @content = html_result
+    end
+  end
 end

@@ -7,11 +7,23 @@ class HomeViewModel < ViewModelBase
     apply_substitution("{{email}}", email)
 
     apply_tag_substitution("y-each-tasks") do |html_part|
-      tasks.map do |task|
-        html_part
-          .gsub("{{task.name}}", task.name)
-          .gsub("{{task.id}}", task.id)
-      end.join
+      build_tasks_data(html_part, tasks)
     end
+  end
+
+  def tasks_partial(tasks)
+    render_partial("y-each-tasks") do |html_part|
+      build_tasks_data(html_part, tasks)
+    end
+  end
+
+  private
+
+  def build_tasks_data(html, tasks)
+    tasks.map do |task|
+      html
+        .gsub("{{task.name}}", task.name)
+        .gsub("{{task.id}}", task.id)
+    end.join
   end
 end

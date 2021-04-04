@@ -10,7 +10,7 @@ class DB
   }.freeze
 
   def self.connection
-    @connection = new
+    @connection ||= new
   end
 
   def initialize
