@@ -8,10 +8,14 @@ fi
 
 network="yata"
 runAs=""
+protocol=""
+hostDomain=""
 
 if [ "$APP_ENV" == "production" ]
 then
   runAs="sudo"
+	protocol="https"
+	hostDomain="yata42.online"
 fi
 
 $runAs docker network create $network
@@ -23,6 +27,8 @@ $runAs docker run \
   -v yata_bundle_cache:/usr/local/bundle \
   -w /yata \
   -e APP_ENV=$APP_ENV \
+	-e APP_PROTOCOL=$protocol \
+	-e APP_HOST=$hostDomain \
   -p 4242:4242 \
   --network $network \
   ruby:2.7 \
