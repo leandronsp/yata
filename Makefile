@@ -1,11 +1,14 @@
-serve:
-	./bin/serve
+up:
+	docker-compose up -d
 
-startpg:
-	./bin/startpg
+down:
+	docker-compose down
+
+logs:
+	docker-compose logs -f
+
+reset:
+	make down && make up
 
 psql:
-	./bin/psql
-
-migratedb:
-	./bin/rake migratedb
+	./docker/psql

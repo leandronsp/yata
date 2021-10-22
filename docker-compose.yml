@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  yata-app:
+    tty: true
+    stdin_open: true
+    container_name: yata-app
+    build:
+      context: .
+    working_dir: /app
+    environment:
+      APP_ENV: development
+      APP_HOST: 10.10.10.42
+      APP_PORT: 3000
+      APP_PROTOCOL: http
+    volumes:
+      - ./:/app
+      - rubygems:/usr/local/bundle
+    command: 'bundle exec rake server'
+    entrypoint: './docker/dev.entrypoint.sh'
+    ports:
+      - "3000:3000"
+    networks:
+      yata:
+
+  yata-db:
+    image: postgres:12
+    container_name: yata-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: yatadev
+      POSTGRES_USER: yatadev
+      POSTGRES_DB: yata
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data/pgdata
+    networks:
+      - yata
+
+volumes:
+  rubygems:
+  pgdata:
+
+networks:
+  yata:

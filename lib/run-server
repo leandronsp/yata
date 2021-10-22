@@ -3,4 +3,4 @@
 load './config/environment.rb'
 require './lib/application'
 
-Application.serve!(4242)
+Application.serve!(3000)

@@ -8,7 +8,7 @@ class RegisterThenLoginTest < Test::Unit::TestCase
                                 "Content-Length: 66",
                                 "email=test@acme.com&password=pass123&password_confirmation=pass123"))
 
-    assert remove_cr(response).match(/HTTP\/1\.1 301.*?Location: http:\/\/localhost:4242\/login/)
+    assert remove_cr(response).match(/HTTP\/1\.1 301.*?Location: http:\/\/localhost:3000\/login/)
 
     refresh!
 
@@ -17,6 +17,6 @@ class RegisterThenLoginTest < Test::Unit::TestCase
                                 "Content-Length: 36",
                                 "email=test@acme.com&password=pass123"))
 
-    assert remove_cr(response).match(/HTTP\/1\.1 301.*?Location: http:\/\/localhost:4242\//)
+    assert remove_cr(response).match(/HTTP\/1\.1 301.*?Location: http:\/\/localhost:3000\//)
   end
 end

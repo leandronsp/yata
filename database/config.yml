@@ -1,10 +1,10 @@
 development:
   adapter: postgres
-  dbname: yata_development
-  host: yata_development
+  dbname: yata
+  host: yata-db
   port: 5432
-  user: yata
-  password: yata
+  user: yatadev
+  password: yatadev
 
 test:
   adapter: filesystem

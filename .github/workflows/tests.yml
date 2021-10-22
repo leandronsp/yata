@@ -36,6 +36,6 @@ jobs:
         bundle exec rake createdb
         bundle exec rake migratedb
     - name: Run Unit tests
-      run: export APP_PORT=4242 bundle exec rake test
+      run: export APP_PORT=3000 bundle exec rake test
     - name: Run E2E tests
-      run: export APP_PORT=4242 bundle exec rake e2e
+      run: export APP_PORT=3000 bundle exec rake e2e

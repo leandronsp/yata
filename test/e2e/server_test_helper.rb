@@ -5,7 +5,7 @@ module ServerTestHelper
 
   def setup
     DB.connection.truncatedb rescue nil
-    @server = TCPSocket.open('localhost', 4242)
+    @server = TCPSocket.open('localhost', 3000)
   end
 
   def teardown
@@ -14,7 +14,7 @@ module ServerTestHelper
 
   def refresh!
     @server.close
-    @server = TCPSocket.open('localhost', 4242)
+    @server = TCPSocket.open('localhost', 3000)
   end
 
   def prepare_request(action, headers = '', body = '')

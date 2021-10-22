@@ -1,6 +1,7 @@
 require 'rack'
 require 'json'
 require './lib/routes'
+require 'byebug'
 
 class RackApp
   def call(env)

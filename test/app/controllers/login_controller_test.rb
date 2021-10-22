@@ -19,7 +19,7 @@ class LoginControllerTest < Test::Unit::TestCase
     assert action_spy.has_been_called?
 
     assert response[:status] == 301
-    assert response[:headers]['Location'] == 'http://localhost:4242/'
+    assert response[:headers]['Location'] == 'http://localhost:3000/'
     assert response[:headers]['Set-Cookie'] == 'email=test@acme.com; path=/; HttpOnly'
   end
 
@@ -40,7 +40,7 @@ class LoginControllerTest < Test::Unit::TestCase
     response = controller.destroy
 
     assert response[:status] == 301
-    assert response[:headers]['Location'] == 'http://localhost:4242/'
+    assert response[:headers]['Location'] == 'http://localhost:3000/'
     assert response[:headers]['Set-Cookie'] == 'email=test@acme.com; path=/; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
   end
 
