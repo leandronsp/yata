@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: yata-pod
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -32,8 +32,20 @@ spec:
           - name: APP_ENV
             value: production
           - name: APP_HOST
-            value: 34.116.244.100
+            value: yata42.online
           - name: APP_PORT
-            value: "3000"
+            value: "80"
           - name: APP_PROTOCOL
             value: http
+          - name: POSTGRES_HOST
+            value: yata-db-0.yata-db-svc
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: pguser
+                key: value
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pguser
+                key: value

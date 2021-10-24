@@ -16,9 +16,16 @@ spec:
       labels:
         app: yata-db
     spec:
+      volumes:
+        - name: yata-db-storage-volume
+          persistentVolumeClaim:
+            claimName: yata-db-pvc
       containers:
       - name: postgres
         image: postgres:12
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: yata-db-storage-volume
         env:
           - name: POSTGRES_DB
             value: yata

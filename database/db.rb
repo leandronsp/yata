@@ -2,6 +2,7 @@ require './database/pg_database'
 require './database/fs_database'
 require './database/pg_database'
 require 'yaml'
+require 'erb'
 
 class DB
   ADAPTERS = {
@@ -14,7 +15,12 @@ class DB
   end
 
   def initialize
-    yaml_data = YAML.load_file('./database/config.yml')
+    yaml_data =
+      './database/config.yml'
+      .then { |path|   File.read(path) }
+      .then { |data|   ERB.new(data).result }
+      .then { |parsed| YAML.load(parsed) }
+
     dbconfig  = yaml_data[APP_ENV]
     db_klass  = ADAPTERS[dbconfig['adapter'].to_sym]
 

@@ -14,6 +14,8 @@ services:
       APP_HOST: 10.10.10.42
       APP_PORT: 3000
       APP_PROTOCOL: http
+      POSTGRES_USER: yatadev
+      POSTGRES_PASSWORD: yatadev
     volumes:
       - ./:/app
       - rubygems:/usr/local/bundle
