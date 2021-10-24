@@ -11,6 +11,7 @@
 ```bash
 # Create the cluster
 gcloud auth application-default login
+cd iac/
 pulumi up
 
 # Configure cluster controllers
