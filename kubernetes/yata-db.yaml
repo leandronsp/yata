@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: yata-db
+  name: yata-db
+spec:
+  serviceName: yata-db-svc
+  replicas: 1
+  strategy:
+  selector:
+    matchLabels:
+      app: yata-db
+  template:
+    metadata:
+      labels:
+        app: yata-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:12
+        env:
+          - name: POSTGRES_DB
+            value: yata
+          - name: POSTGRES_USER
+            value: yataprod
+          - name: POSTGRES_PASSWORD
+            value: yataprod
+          - name: PGDATA
+            value: /var/lib/postgresql/data/pgdata

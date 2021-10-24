@@ -7,6 +7,7 @@ services:
     container_name: yata-app
     build:
       context: .
+      target: base
     working_dir: /app
     environment:
       APP_ENV: development
@@ -17,7 +18,7 @@ services:
       - ./:/app
       - rubygems:/usr/local/bundle
     command: 'bundle exec rake server'
-    entrypoint: './docker/dev.entrypoint.sh'
+    entrypoint: './docker/entrypoint.sh'
     ports:
       - "3000:3000"
     networks:

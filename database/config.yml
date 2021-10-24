@@ -9,3 +9,11 @@ development:
 test:
   adapter: filesystem
   dbname: yata_test
+
+production:
+  adapter: postgres
+  dbname: yata
+  host: yata-db-0.yata-db-svc
+  port: 5432
+  user: yataprod
+  password: yataprod

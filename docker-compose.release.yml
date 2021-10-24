@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  release:
+    image: europe-central2-docker.pkg.dev/yata-329822/yata/yata
+    build:
+      context: .
+      target: release

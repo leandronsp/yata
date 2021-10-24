@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yata-pod
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: yata-pod
+  template:
+    metadata:
+      labels:
+        app: yata-pod
+    spec:
+      containers:
+      - name: yata-app
+        image: europe-central2-docker.pkg.dev/yata-329822/yata/yata
+        ports:
+          - containerPort: 3000
+        imagePullPolicy: Always
+        resources: {}
+        readinessProbe:
+          tcpSocket:
+            port: 3000
+          periodSeconds: 5
+        env:
+          - name: APP_ENV
+            value: production
+          - name: APP_HOST
+            value: 34.116.244.100
+          - name: APP_PORT
+            value: "3000"
+          - name: APP_PROTOCOL
+            value: http
