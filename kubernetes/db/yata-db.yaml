@@ -30,8 +30,14 @@ spec:
           - name: POSTGRES_DB
             value: yata
           - name: POSTGRES_USER
-            value: yataprod
+            valueFrom:
+              secretKeyRef:
+                name: pguser
+                key: value
           - name: POSTGRES_PASSWORD
-            value: yataprod
+            valueFrom:
+              secretKeyRef:
+                name: pguser
+                key: value
           - name: PGDATA
             value: /var/lib/postgresql/data/pgdata
