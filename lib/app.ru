@@ -30,9 +30,9 @@ class RackApp
   end
 
   def build_response(attrs = {})
-    status = attrs[:status]
+    status  = attrs[:status]
     headers = attrs[:headers] || {}
-    body = attrs[:body] || ''
+    body    = attrs[:body] || ''
 
     [status, headers, [body]]
   end
